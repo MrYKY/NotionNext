@@ -1964,19 +1964,23 @@ svg + .notion-page-title-text {
 /* https://github.com/kchen0x */
 .notion-quote {
   display: block;
-  border-radius: 5px;
+  border-radius: 2px;
   border-color: var(--notion-blue);
+  border-width: 1px;
   border-left-color: var(--notion-blue);
   background-color: var(--notion-blue_background_co);
-  width: 100%;
+  width:100%;
   white-space: pre-wrap;
   word-break: break-word;
   border-left: 10px solid;
   padding: 0.2em 0.9em;
-  margin: 6px 0;
+  margin: 6px 20px;
   font-size: 1em;
+  font-size: 120%;
   /* color: var(--notion-gray); */
+  @apply transition-all duration-200 ease-in-out
 }
+
 
 /* .notion-asset-wrapper-pdf > div {
   width: unset !important;
