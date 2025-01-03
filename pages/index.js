@@ -13,7 +13,8 @@ import { DynamicLayout } from '@/themes/theme'
  */
 const Index = props => {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} layoutName='LayoutIndex' {...props} />
+  const layoutName = siteConfig('INDEX_LAYOUT', BLOG.LAYOUT_MAPPINGS['/'], props.NOTION_CONFIG)
+  return <DynamicLayout theme={theme} layoutName={layoutName} {...props} />
 }
 
 /**
