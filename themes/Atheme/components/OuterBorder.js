@@ -1,0 +1,32 @@
+import { useEffect, useState } from 'react'
+import { siteConfig } from '@/lib/config'
+
+const OuterBorder = ({ children }) => {
+  const [hasFocus, setHasFocus] = useState(false)
+
+  useEffect(() => {
+    // 监听 window 的 focus 和 blur 事件
+    const handleFocus = () => setHasFocus(true)
+    const handleBlur = () => setHasFocus(false)
+
+    window.addEventListener('focus', handleFocus)
+    window.addEventListener('blur', handleBlur)
+
+    // 清理事件监听器
+    return () => {
+      window.removeEventListener('focus', handleFocus)
+      window.removeEventListener('blur', handleBlur)
+    }
+  }, [])
+
+  return (
+    <div
+      // id='theme-gitbook'
+      className={`${siteConfig('FONT_STYLE')} m-6 p-6 rounded-lg scroll-smooth bg-white ${hasFocus ? 'focused' : ''} shadow-cyan-200 justify-center  items-center dark:text-gray-300 border outer-border overflow-y-auto flex scroll-hidden divide divide-gray-950`}
+      style={{ height: 'calc(100vh - 3rem)' }}>
+      {children}
+    </div>
+  )
+}
+
+export default OuterBorder

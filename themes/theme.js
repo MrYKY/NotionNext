@@ -92,7 +92,7 @@ export const DynamicLayout = props => {
 export const getLayoutByTheme = ({ layoutName, theme }) => {
   // const layoutName = getLayoutNameByPath(router.pathname, router.asPath)
   const LayoutComponents =
-    ThemeComponents[layoutName] || ThemeComponents.LayoutSlug
+    ThemeComponents[layoutName] || ThemeComponents.LayoutIndex
 
   const router = useRouter()
   const themeQuery = getQueryParam(router?.asPath, 'theme') || theme
@@ -102,7 +102,7 @@ export const getLayoutByTheme = ({ layoutName, theme }) => {
   if (!isDefaultTheme) {
     const loadThemeComponents = componentsSource => {
       const components =
-        componentsSource[layoutName] || componentsSource.LayoutSlug
+        componentsSource[layoutName] || componentsSource.LayoutIndex
       setTimeout(fixThemeDOM, 500)
       return components
     }
@@ -122,7 +122,7 @@ export const getLayoutByTheme = ({ layoutName, theme }) => {
  * @returns
  */
 const getLayoutNameByPath = path => {
-  const layoutName = LAYOUT_MAPPINGS[path] || 'LayoutSlug'
+  const layoutName = LAYOUT_MAPPINGS[path] || 'LayoutIndex'
   //   console.log('path-layout',path,layoutName)
   return layoutName
 }

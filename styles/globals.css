@@ -286,3 +286,20 @@ img {
 .adsbygoogle {
   overflow: hidden;
 }
+
+/* 自定义变量来配置阴影宽度和软化程度 */
+:root {
+  --shadow-width: 0px; /* 阴影扩展宽度 */
+  --shadow-softness: 20px; /* 阴影模糊半径 */
+  --shadow-opacity: 1; /* 阴影透明度 */
+}
+
+/* 使元素带有动态阴影效果 */
+.focused {
+  box-shadow: 0 0 var(--shadow-softness) var(--shadow-width) rgba(0, 26, 255, 0.2);
+}
+
+.outer-border {
+  border-width: 0.5px;
+  border-color: rgba(0, 0, 0, 0.5); /* 这里的透明度可以根据需要调整 */
+}

@@ -63,16 +63,16 @@ export default function Header(props) {
   const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
   return (
-    <div id='top-nav' className={'fixed top-0 w-full z-20 ' + className}>
+    <div id='top-nav' className={'z-20' + className}>
       {/* PC端菜单 */}
-      <div className='flex justify-center border-b dark:border-black items-center w-full h-16 bg-white dark:bg-hexo-black-gray'>
-        <div className='px-5 max-w-screen-4xl w-full flex gap-x-3 justify-between items-center'>
+      <div className='flex flex-col justify-start dark:border-black items-start w-full h-16 bg-white dark:bg-hexo-black-gray relative'>
+        <div className='py-10 max-w-screen-4xl w-full flex flex-col gap-y-10 justify-between items-center'>
           {/* 左侧*/}
-          <div className='flex'>
+          <div className='flex flex-col gap-y-20'>
             <LogoBar {...props} />
 
             {/* 桌面端顶部菜单 */}
-            <div className='hidden md:flex'>
+            <div className='hidden md:flex flex-col gap-y-10'>
               {links &&
                 links?.map((link, index) => (
                   <MenuItemDrop key={index} link={link} />
@@ -95,11 +95,11 @@ export default function Header(props) {
                 <UserButton />
               </>
             )}
-            <DarkModeButton className='text-sm items-center h-full hidden md:flex' />
-            <SearchInput className='hidden md:flex md:w-52 lg:w-72' />
+            {/* <DarkModeButton className='text-sm items-center h-full hidden md:flex' /> */}
+            {/* <SearchInput className='hidden md:flex md:w-52 lg:w-72' /> */}
             {/* 折叠按钮、仅移动端显示 */}
             <div className='mr-1 flex md:hidden justify-end items-center space-x-4  dark:text-gray-200'>
-              <DarkModeButton className='flex text-md items-center h-full' />
+              {/* <DarkModeButton className='flex text-md items-center h-full' /> */}
               <div
                 onClick={toggleMenuOpen}
                 className='cursor-pointer text-lg hover:scale-110 duration-150'>

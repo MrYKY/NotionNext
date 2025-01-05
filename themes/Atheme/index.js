@@ -36,14 +36,9 @@ import NavPostList from './components/NavPostList'
 import PageNavDrawer from './components/PageNavDrawer'
 import RevolverMaps from './components/RevolverMaps'
 import TagItemMini from './components/TagItemMini'
+import OuterBorder from './components/OuterBorder'
 import CONFIG from './config'
 import { Style } from './style'
-
-const AlgoliaSearchModal = dynamic(
-  () => import('@/components/AlgoliaSearchModal'),
-  { ssr: false }
-)
-const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
 // 主题全局变量
 const ThemeGlobalGitbook = createContext()
@@ -136,31 +131,26 @@ const LayoutBase = props => {
       }}>
       <Style />
 
-      <div
-        id='theme-gitbook'
-        className={`${siteConfig('FONT_STYLE')} pb-16 md:pb-0 scroll-smooth bg-white dark:bg-black w-full h-full min-h-screen justify-center dark:text-gray-300`}>
-        <AlgoliaSearchModal cRef={searchModal} {...props} />
-
-        {/* 顶部导航栏 */}
-        <Header {...props} />
-
+      <OuterBorder>
         <main
           id='wrapper'
-          className={`${siteConfig('LAYOUT_SIDEBAR_REVERSE') ? 'flex-row-reverse' : ''} relative flex justify-between w-full gap-x-6 h-full mx-auto max-w-screen-4xl`}>
+          className={`${siteConfig('LAYOUT_SIDEBAR_REVERSE') ? 'flex-row-reverse' : ''} relative flex justify-between w-full gap-x-6 h-full mx-auto`}>
+          {/* 顶部导航栏 */}
+          <Header {...props} />
           {/* 左侧推拉抽屉 */}
           {fullWidth ? null : (
             <div className={'hidden md:block relative z-10 '}>
               <div className='w-80 pt-14 pb-4 sticky top-0 h-screen flex justify-between flex-col'>
                 {/* 导航 */}
-                <div className='overflow-y-scroll scroll-hidden pt-10 pl-5'>
+                <div className='overflow-y-scroll scroll-hidden pt-10'>
                   {/* 嵌入 */}
-                  {slotLeft}
+                  {/* {slotLeft} */}
 
                   {/* 所有文章列表 */}
                   <NavPostList filteredNavPages={filteredNavPages} {...props} />
                 </div>
                 {/* 页脚 */}
-                <Footer {...props} />
+                {/* <Footer {...props} /> */}
               </div>
             </div>
           )}
@@ -173,13 +163,8 @@ const LayoutBase = props => {
               id='container-inner'
               className={`w-full ${fullWidth ? 'px-5' : 'max-w-3xl px-3 lg:px-0'} justify-center mx-auto`}>
               {slotTop}
-              <WWAds className='w-full' orientation='horizontal' />
 
               {children}
-
-              {/* Google广告 */}
-              <AdSlot type='in-article' />
-              <WWAds className='w-full' orientation='horizontal' />
             </div>
 
             {/* 底部 */}
@@ -195,7 +180,7 @@ const LayoutBase = props => {
                 'w-72 hidden 2xl:block dark:border-transparent flex-shrink-0 relative z-10 '
               }>
               <div className='py-14 sticky top-0'>
-                <ArticleInfo post={props?.post ? props?.post : props.notice} />
+                {/* <ArticleInfo post={props?.post ? props?.post : props.notice} /> */}
 
                 <div>
                   {/* 桌面端目录 */}
@@ -209,15 +194,14 @@ const LayoutBase = props => {
                         null,
                         CONFIG
                       ) === 'true' && <RevolverMaps />}
-                      <Live2D />
                     </>
                   )}
                   {/* gitbook主题首页只显示公告 */}
                   <Announcement {...props} />
                 </div>
 
-                <AdSlot type='in-article' />
-                <Live2D />
+                {/* <AdSlot type='in-article' /> */}
+                {/* <Live2D /> */}
               </div>
             </div>
           )}
@@ -233,7 +217,7 @@ const LayoutBase = props => {
 
         {/* 移动端底部导航栏 */}
         <BottomMenuBar {...props} />
-      </div>
+      </OuterBorder>
     </ThemeGlobalGitbook.Provider>
   )
 }
@@ -292,9 +276,7 @@ const LayoutIndex = props => {
 
 const LayoutMainPage = props => {
   // 返回主页内容
-  return (
-    <h1 className='text-3xl pt-12 dark:text-gray-300'>Kyan Blog</h1>
-  ) 
+  return <h1 className='text-3xl pt-12 dark:text-gray-300'>Kyan Blog</h1>
 }
 
 /**
@@ -327,21 +309,18 @@ const LayoutSlug = props => {
   useEffect(() => {
     // 404
     if (!post) {
-      setTimeout(
-        () => {
-          if (isBrowser) {
-            const article = document.querySelector(
-              '#article-wrapper #notion-article'
-            )
-            if (!article) {
-              router.push('/404').then(() => {
-                console.warn('找不到页面', router.asPath)
-              })
-            }
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.querySelector(
+            '#article-wrapper #notion-article'
+          )
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
           }
-        },
-        waiting404
-      )
+        }
+      }, waiting404)
     }
   }, [post])
   return (
@@ -595,19 +574,18 @@ const LayoutDashboard = props => {
 }
 
 export {
-    Layout404,
-    LayoutArchive,
-    LayoutBase,
-    LayoutCategoryIndex,
-    LayoutDashboard,
-    LayoutIndex,
-    LayoutMainPage,
-    LayoutPostList,
-    LayoutSearch,
-    LayoutSignIn,
-    LayoutSignUp,
-    LayoutSlug,
-    LayoutTagIndex,
-    CONFIG as THEME_CONFIG
+  Layout404,
+  LayoutArchive,
+  LayoutBase,
+  LayoutCategoryIndex,
+  LayoutDashboard,
+  LayoutIndex,
+  LayoutMainPage,
+  LayoutPostList,
+  LayoutSearch,
+  LayoutSignIn,
+  LayoutSignUp,
+  LayoutSlug,
+  LayoutTagIndex,
+  CONFIG as THEME_CONFIG
 }
-
