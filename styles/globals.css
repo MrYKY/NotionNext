@@ -290,7 +290,7 @@ img {
 /* 自定义变量来配置阴影宽度和软化程度 */
 :root {
   --shadow-width: 0px; /* 阴影扩展宽度 */
-  --shadow-softness: 20px; /* 阴影模糊半径 */
+  --shadow-softness: 5px; /* 阴影模糊半径 */
   --shadow-opacity: 1; /* 阴影透明度 */
 }
 

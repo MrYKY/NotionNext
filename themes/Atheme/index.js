@@ -188,7 +188,7 @@ const LayoutBase = props => {
                   {slotRight}
                   {router.route === '/' && (
                     <>
-                      <InfoCard {...props} />
+                      {/* <InfoCard {...props} /> */}
                       {siteConfig(
                         'GITBOOK_WIDGET_REVOLVER_MAPS',
                         null,
@@ -197,7 +197,7 @@ const LayoutBase = props => {
                     </>
                   )}
                   {/* gitbook主题首页只显示公告 */}
-                  <Announcement {...props} />
+                  {/* <Announcement {...props} /> */}
                 </div>
 
                 {/* <AdSlot type='in-article' /> */}

@@ -66,13 +66,13 @@ export default function Header(props) {
     <div id='top-nav' className={'z-20' + className}>
       {/* PC端菜单 */}
       <div className='flex flex-col justify-start dark:border-black items-start w-full h-16 bg-white dark:bg-hexo-black-gray relative'>
-        <div className='py-10 max-w-screen-4xl w-full flex flex-col gap-y-10 justify-between items-center'>
+        <div className='max-w-screen-4xl w-full flex flex-col gap-y-10 justify-between items-center'>
           {/* 左侧*/}
-          <div className='flex flex-col gap-y-20'>
+          <div className='flex flex-col'>
             <LogoBar {...props} />
 
             {/* 桌面端顶部菜单 */}
-            <div className='hidden md:flex flex-col gap-y-10'>
+            <div className='hidden md:flex flex-col pt-10'>
               {links &&
                 links?.map((link, index) => (
                   <MenuItemDrop key={index} link={link} />
