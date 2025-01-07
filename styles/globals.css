@@ -296,10 +296,18 @@ img {
 
 /* 使元素带有动态阴影效果 */
 .focused {
-  box-shadow: 0 0 var(--shadow-softness) var(--shadow-width) rgba(0, 26, 255, 0.2);
+  box-shadow: 0 0 var(--shadow-softness) var(--shadow-width)
+    rgba(0, 26, 255, 0.2);
 }
 
 .outer-border {
   border-width: 0.5px;
   border-color: rgba(0, 0, 0, 0.5); /* 这里的透明度可以根据需要调整 */
+}
+
+.header-hr {
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+  --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
