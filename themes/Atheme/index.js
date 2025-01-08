@@ -198,7 +198,7 @@ const LayoutIndex = props => {
         {/* 中间内容区域 */}
         <div
           id='center-wrapper'
-          className='flex flex-col justify-between w-full h-full overflow-y-auto scroll-hidden relative z-10 pt-14'>
+          className='flex flex-col justify-between w-full h-full overflow-y-auto scroll-hidden relative z-10'>
           <div
             id='container-inner'
             className={`w-full ${fullWidth ? 'px-5' : 'max-w-3xl px-3 lg:px-0'} justify-center mx-auto`}>
