@@ -132,91 +132,9 @@ const LayoutBase = props => {
       <Style />
 
       <OuterBorder>
-        <main
-          id='wrapper'
-          className={`${siteConfig('LAYOUT_SIDEBAR_REVERSE') ? 'flex-row-reverse' : ''} relative flex justify-between w-full gap-x-6 h-full mx-auto`}>
-          {/* 顶部导航栏 */}
-          <Header {...props} />
-          {/* 左侧推拉抽屉 */}
-          {fullWidth ? null : (
-            <div className={'hidden md:block relative z-10 '}>
-              <div className='w-80 pt-14 pb-4 sticky top-0 h-screen flex justify-between flex-col'>
-                {/* 导航 */}
-                <div className='overflow-y-scroll scroll-hidden pt-10'>
-                  {/* 嵌入 */}
-                  {/* {slotLeft} */}
-
-                  {/* 所有文章列表 */}
-                  <NavPostList filteredNavPages={filteredNavPages} {...props} />
-                </div>
-                {/* 页脚 */}
-                {/* <Footer {...props} /> */}
-              </div>
-            </div>
-          )}
-
-          {/* 中间内容区域 */}
-          <div
-            id='center-wrapper'
-            className='flex flex-col justify-between w-full relative z-10 pt-14 min-h-screen'>
-            <div
-              id='container-inner'
-              className={`w-full ${fullWidth ? 'px-5' : 'max-w-3xl px-3 lg:px-0'} justify-center mx-auto`}>
-              {slotTop}
-
-              {children}
-            </div>
-
-            {/* 底部 */}
-            <div className='md:hidden'>
-              <Footer {...props} />
-            </div>
-          </div>
-
-          {/*  右侧 */}
-          {fullWidth ? null : (
-            <div
-              className={
-                'w-72 hidden 2xl:block dark:border-transparent flex-shrink-0 relative z-10 '
-              }>
-              <div className='py-14 sticky top-0'>
-                {/* <ArticleInfo post={props?.post ? props?.post : props.notice} /> */}
-
-                <div>
-                  {/* 桌面端目录 */}
-                  <Catalog {...props} />
-                  {slotRight}
-                  {router.route === '/' && (
-                    <>
-                      {/* <InfoCard {...props} /> */}
-                      {siteConfig(
-                        'GITBOOK_WIDGET_REVOLVER_MAPS',
-                        null,
-                        CONFIG
-                      ) === 'true' && <RevolverMaps />}
-                    </>
-                  )}
-                  {/* gitbook主题首页只显示公告 */}
-                  {/* <Announcement {...props} /> */}
-                </div>
-
-                {/* <AdSlot type='in-article' /> */}
-                {/* <Live2D /> */}
-              </div>
-            </div>
-          )}
-        </main>
-
+        {slotTop}
+        {children}
         {GITBOOK_LOADING_COVER && <LoadingCover />}
-
-        {/* 回顶按钮 */}
-        <JumpToTopButton />
-
-        {/* 移动端导航抽屉 */}
-        <PageNavDrawer {...props} filteredNavPages={filteredNavPages} />
-
-        {/* 移动端底部导航栏 */}
-        <BottomMenuBar {...props} />
       </OuterBorder>
     </ThemeGlobalGitbook.Provider>
   )
@@ -229,56 +147,126 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = props => {
+  console.log('Enter LayoutIndex', props)
   const router = useRouter()
-  const index = siteConfig('GITBOOK_INDEX_PAGE', 'about', CONFIG)
-  const [hasRedirected, setHasRedirected] = useState(false) // 添加状态追踪是否已重定向
+  const {
+    children,
+    post,
+    allNavPages,
+    latestPosts,
+    slotLeft,
+    slotRight,
+    slotTop
+  } = props
+  const { fullWidth } = useGlobal()
+  const [filteredNavPages, setFilteredNavPages] = useState(allNavPages)
 
   useEffect(() => {
-    const tryRedirect = async () => {
-      if (!hasRedirected) {
-        // 仅当未重定向时执行
-        setHasRedirected(true) // 更新状态，防止多次执行
+    setFilteredNavPages(getNavPagesWithLatest(allNavPages, latestPosts, post))
+  }, [router])
 
-        // 重定向到指定文章
-        router.push(index).then(() => {
-          setTimeout(() => {
-            const article = document.querySelector(
-              '#article-wrapper #notion-article'
-            )
-            if (!article) {
-              console.log(
-                '请检查您的Notion数据库中是否包含此slug页面： ',
-                index
-              )
+  const GITBOOK_LOADING_COVER = siteConfig(
+    'GITBOOK_LOADING_COVER',
+    true,
+    CONFIG
+  )
+  return (
+    <div className='w-full h-full'>
+      <main
+        id='wrapper'
+        className={`${siteConfig('LAYOUT_SIDEBAR_REVERSE') ? 'flex-row-reverse' : ''} relative flex justify-between w-full gap-x-6 h-full mx-auto`}>
+        {/* 顶部导航栏 */}
+        <Header {...props} />
+        {/* 左侧推拉抽屉 */}
+        {fullWidth ? null : (
+          <div className={'hidden md:block relative z-10 '}>
+            <div className='w-80 pt-14 pb-4 sticky top-0 h-screen flex justify-between flex-col'>
+              {/* 导航 */}
+              <div className='overflow-y-scroll scroll-hidden pt-10'>
+                {/* 嵌入 */}
+                {/* {slotLeft} */}
 
-              // 显示错误信息
-              const containerInner = document.querySelector(
-                '#theme-gitbook #container-inner'
-              )
-              const newHTML = `<h1 class="text-3xl pt-12 dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${index}的文章</div></blockquote>`
-              containerInner?.insertAdjacentHTML('afterbegin', newHTML)
-            }
-          }, 2000)
-        })
-      }
-    }
+                {/* 所有文章列表 */}
+                <NavPostList filteredNavPages={filteredNavPages} {...props} />
+              </div>
+              {/* 页脚 */}
+              {/* <Footer {...props} /> */}
+            </div>
+          </div>
+        )}
 
-    if (index) {
-      console.log('重定向', index)
-      tryRedirect()
-    } else {
-      console.log('无重定向', index)
-    }
-  }, [index, hasRedirected]) // 将 hasRedirected 作为依赖确保状态变更时更新
+        {/* 中间内容区域 */}
+        <div
+          id='center-wrapper'
+          className='flex flex-col justify-between w-full h-full overflow-y-auto scroll-hidden relative z-10 pt-14'>
+          <div
+            id='container-inner'
+            className={`w-full ${fullWidth ? 'px-5' : 'max-w-3xl px-3 lg:px-0'} justify-center mx-auto`}>
+            {slotTop}
 
-  return null // 不渲染任何内容
+            {children}
+          </div>
+
+          {/* 底部 */}
+          <div className='md:hidden'>
+            <Footer {...props} />
+          </div>
+        </div>
+
+        {/*  右侧 */}
+        {fullWidth ? null : (
+          <div
+            className={
+              'w-72 hidden 2xl:block dark:border-transparent flex-shrink-0 relative z-10 '
+            }>
+            <div className='py-14 sticky top-0'>
+              {/* <ArticleInfo post={props?.post ? props?.post : props.notice} /> */}
+
+              <div>
+                {/* 桌面端目录 */}
+                <Catalog {...props} />
+                {slotRight}
+                {router.route === '/' && (
+                  <>
+                    {/* <InfoCard {...props} /> */}
+                    {siteConfig(
+                      'GITBOOK_WIDGET_REVOLVER_MAPS',
+                      null,
+                      CONFIG
+                    ) === 'true' && <RevolverMaps />}
+                  </>
+                )}
+                {/* gitbook主题首页只显示公告 */}
+                {/* <Announcement {...props} /> */}
+              </div>
+
+              {/* <AdSlot type='in-article' /> */}
+              {/* <Live2D /> */}
+            </div>
+          </div>
+        )}
+      </main>
+
+      {/* 回顶按钮 */}
+      <JumpToTopButton />
+
+      {/* 移动端导航抽屉 */}
+      <PageNavDrawer {...props} filteredNavPages={filteredNavPages} />
+
+      {/* 移动端底部导航栏 */}
+      <BottomMenuBar {...props} />
+    </div>
+  )
 }
 
 const LayoutMainPage = props => {
   // 返回主页内容
   return (
-    <div className='w-full h-96 py-80 flex justify-center items-center'>
-      <h1 className='text-3xl pt-12 dark:text-gray-300'>Main Page Site</h1>
+    <div className='w-full h-96 py-80 flex flex-col justify-center items-center'>
+      <h1 className='text-3xl text-'>Main Page Site</h1>
+      <div className='text-2xl text-gray-300'>
+        <Link href='/blog'>进入博客</Link>
+      </div>
     </div>
   )
 }
@@ -328,7 +316,7 @@ const LayoutSlug = props => {
     }
   }, [post])
   return (
-    <>
+    <LayoutIndex {...props}>
       <Head>
         <title>{title}</title>
       </Head>
@@ -383,7 +371,7 @@ const LayoutSlug = props => {
           <CatalogDrawerWrapper {...props} />
         </div>
       )}
-    </>
+    </LayoutIndex>
   )
 }
 

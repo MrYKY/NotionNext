@@ -78,6 +78,7 @@ export const getBaseLayoutByTheme = theme => {
  * @param {*} props
  */
 export const DynamicLayout = props => {
+  console.log('Enter DynamicLayout', props)
   const { theme, layoutName } = props
   const SelectedLayout = getLayoutByTheme({ layoutName, theme })
   return <SelectedLayout {...props} />
