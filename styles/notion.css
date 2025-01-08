@@ -555,8 +555,10 @@ summary > .notion-h {
 
 .notion-hr {
   width: 100%;
-  margin: 6px 0;
+  margin: 10px 0;
   padding: 0;
+  border-top: solid 1px ;
+  border-color: (55, 53, 47);
   /* border-bottom-width: 1px; */
 }
 

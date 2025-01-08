@@ -30,7 +30,7 @@ export default function LoadingCover() {
     <div
       id='loading-cover'
       onClick={handleClick}
-      className={`dark:text-white text-black backdrop-blur-3xl dark:bg-black animate__animated animate__faster ${
+      className={`dark:text-white text-black backdrop-blur-xl dark:bg-black animate__animated animate__faster ${
         onLoading ? 'animate__fadeIn' : 'animate__fadeOut'
       } flex flex-col justify-center z-50 w-full h-full absolute inset-0`}>
       <div className='mx-auto'>

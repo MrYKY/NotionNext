@@ -132,9 +132,9 @@ const LayoutBase = props => {
       <Style />
 
       <OuterBorder>
+        {GITBOOK_LOADING_COVER && <LoadingCover />}
         {slotTop}
         {children}
-        {GITBOOK_LOADING_COVER && <LoadingCover />}
       </OuterBorder>
     </ThemeGlobalGitbook.Provider>
   )
@@ -180,7 +180,7 @@ const LayoutIndex = props => {
         {/* 左侧推拉抽屉 */}
         {fullWidth ? null : (
           <div className={'hidden md:block relative z-10 '}>
-            <div className='w-80 pt-14 pb-4 sticky top-0 h-screen flex justify-between flex-col'>
+            <div className='w-80 pt-14 pb-4 sticky top-0 h-full flex justify-between flex-col'>
               {/* 导航 */}
               <div className='overflow-y-scroll scroll-hidden pt-10'>
                 {/* 嵌入 */}

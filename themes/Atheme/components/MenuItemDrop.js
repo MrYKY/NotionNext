@@ -13,13 +13,13 @@ export const MenuItemDrop = ({ link }) => {
   const selected = router.pathname === link.href || router.asPath === link.href
   return (
     <li
-      className='cursor-pointer list-none items-center flex font-semibold w-full flex-col justify-between '
+      className='cursor-pointer list-none items-center flex font-semibold w-full flex-col justify-between px-2 '
       onMouseOver={() => changeShow(true)}
       onMouseOut={() => changeShow(false)}>
       {!hasSubMenu && (
         <div
           className={
-            'h-full whitespace-nowrap duration-300 text-lg justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-center w-full flex-col pt-3 pb-3 ' +
+            'h-full whitespace-nowrap duration-300 text-base justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-start w-full flex-col py-3 my-1 pl-2 rounded-lg ' +
             (selected
               ? 'bg-slate-800 text-white hover:text-white'
               : 'hover:text-indigo-800 hover:bg-zinc-200')
@@ -35,14 +35,14 @@ export const MenuItemDrop = ({ link }) => {
         <>
           <div
             className={
-              'h-full whitespace-nowrap duration-300 text-lg justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-center pt-3 pb-3 pl-6 pr-4 ' +
+              'h-full whitespace-nowrap duration-300 text-base justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-center w-full flex-col py-3 my-1 rounded-lg ' +
               (selected
-                ? 'bg-green-600 text-white hover:text-white'
-                : 'hover:text-green-600')
+                ? 'bg-slate-800 text-white hover:text-white'
+                : 'hover:text-indigo-800 hover:bg-zinc-200')
             }>
             <div>
-              {link?.icon && <i className={link?.icon} />} {link?.name}
-              {' '}{hasSubMenu && (
+              {link?.icon && <i className={link?.icon} />} {link?.name}{' '}
+              {hasSubMenu && (
                 <i
                   className={`fas fa-chevron-down duration-500 transition-all ${show ? ' rotate-180' : ''}`}></i>
               )}
