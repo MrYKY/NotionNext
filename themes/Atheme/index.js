@@ -276,7 +276,11 @@ const LayoutIndex = props => {
 
 const LayoutMainPage = props => {
   // 返回主页内容
-  return <h1 className='text-3xl pt-12 dark:text-gray-300'>Kyan Blog</h1>
+  return (
+    <div className='w-full h-96 py-80 flex justify-center items-center'>
+      <h1 className='text-3xl pt-12 dark:text-gray-300'>Main Page Site</h1>
+    </div>
+  )
 }
 
 /**
