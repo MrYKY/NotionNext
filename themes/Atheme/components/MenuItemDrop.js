@@ -17,17 +17,19 @@ export const MenuItemDrop = ({ link }) => {
       onMouseOver={() => changeShow(true)}
       onMouseOut={() => changeShow(false)}>
       {!hasSubMenu && (
-        <div
+        <Link
+          href={link?.href}
+          target={link?.target}
           className={
             'h-full whitespace-nowrap duration-300 text-base justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-start w-full flex-col py-3 my-1 pl-2 rounded-lg ' +
             (selected
               ? 'bg-slate-800 text-white hover:text-white'
               : 'hover:text-indigo-800 hover:bg-zinc-200')
           }>
-          <Link href={link?.href} target={link?.target}>
+          <div>
             {link?.icon && <i className={link?.icon} />} {link?.name}
-          </Link>
-        </div>
+          </div>
+        </Link>
       )}
 
       {/* 包含子菜单 */}
