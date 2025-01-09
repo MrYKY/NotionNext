@@ -62,6 +62,7 @@ function getNavPagesWithLatest(allNavPages, latestPosts, post) {
     const res = {
       short_id: item.short_id,
       title: item.title || '',
+      date: item.date || '',
       pageCoverThumbnail: item.pageCoverThumbnail || '',
       category: item.category || null,
       tags: item.tags || null,

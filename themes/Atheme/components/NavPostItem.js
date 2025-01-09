@@ -15,6 +15,7 @@ const NavPostItem = props => {
   const { group, expanded, toggleItem } = props // 接收传递的展开状态和切换函数
   const hoverExpand = siteConfig('GITBOOK_FOLDER_HOVER_EXPAND')
   const [isTouchDevice, setIsTouchDevice] = useState(false)
+  console.log('props', props)
 
   // 检测是否为触摸设备
   useEffect(() => {
