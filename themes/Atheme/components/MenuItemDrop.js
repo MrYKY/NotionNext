@@ -5,6 +5,7 @@ import { useState } from 'react'
 export const MenuItemDrop = ({ link }) => {
   const [show, changeShow] = useState(false)
   const router = useRouter()
+  // console.log('link: ',link)
 
   if (!link || !link.show) {
     return null
@@ -21,13 +22,21 @@ export const MenuItemDrop = ({ link }) => {
           href={link?.href}
           target={link?.target}
           className={
-            'h-full whitespace-nowrap duration-300 text-base justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-start w-full flex-col py-3 my-1 pl-2 rounded-lg ' +
+            'group relative h-full whitespace-nowrap duration-300 text-base justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-start w-full flex-col py-3 my-1 pl-2 rounded-lg ' +
             (selected
-              ? 'bg-slate-800 text-white hover:text-white'
-              : 'hover:text-indigo-800 hover:bg-zinc-200')
+              ? 'bg-slate-800 text-white'
+              : 'hover:text-indigo-800 hover:bg-zinc-200 ')
           }>
-          <div>
-            {link?.icon && <i className={link?.icon} />} {link?.name}
+          <div className='flex items-center gap-x-2'>
+            {link?.pageIcon && <span className="text-base">{link.pageIcon}</span>} {link?.name}
+          </div>
+          <div className='absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center'>
+            <div
+              className={`w-3 h-0.5 bg-gray-500 rounded transition-all duration-150 ${
+                selected
+                  ? '!w-2 !h-2 !border-t-2 !border-r-2 !border-white !bg-transparent !rounded-none transform rotate-45'
+                  : 'group-hover:w-3 group-hover:h-3 group-hover:border-2 group-hover:border-gray-500 group-hover:bg-transparent group-hover:rounded-full'
+              }`}></div>
           </div>
         </Link>
       )}

@@ -165,11 +165,6 @@ const LayoutIndex = props => {
     setFilteredNavPages(getNavPagesWithLatest(allNavPages, latestPosts, post))
   }, [router])
 
-  const GITBOOK_LOADING_COVER = siteConfig(
-    'GITBOOK_LOADING_COVER',
-    true,
-    CONFIG
-  )
   return (
     <div className='w-full h-full'>
       <main
@@ -180,11 +175,11 @@ const LayoutIndex = props => {
         {/* 左侧推拉抽屉 */}
         {fullWidth ? null : (
           <div className={'hidden md:block relative z-10 '}>
-            <div className='w-80 pt-14 pb-4 sticky top-0 h-full flex justify-between flex-col'>
+            <div className='w-72 pt-6 pb-4 sticky top-0 h-full flex justify-between flex-col border-r'>
               {/* 导航 */}
               <div className='overflow-y-scroll scroll-hidden pt-10'>
                 {/* 嵌入 */}
-                {/* {slotLeft} */}
+                {slotLeft}
 
                 {/* 所有文章列表 */}
                 <NavPostList filteredNavPages={filteredNavPages} {...props} />
@@ -382,7 +377,7 @@ const LayoutSlug = props => {
  * @returns
  */
 const LayoutSearch = props => {
-  return <></>
+  return <LayoutIndex {...props}></LayoutIndex>
 }
 
 /**
@@ -395,7 +390,7 @@ const LayoutArchive = props => {
   const { archivePosts } = props
 
   return (
-    <>
+    <LayoutIndex {...props}>
       <div className='mb-10 pb-20 md:py-12 py-3  min-h-full'>
         {Object.keys(archivePosts)?.map(archiveTitle => (
           <BlogArchiveItem
@@ -405,7 +400,7 @@ const LayoutArchive = props => {
           />
         ))}
       </div>
-    </>
+    </LayoutIndex>
   )
 }
 
@@ -414,9 +409,11 @@ const LayoutArchive = props => {
  */
 const Layout404 = props => {
   return (
+    <LayoutIndex {...props}>
     <div className='w-full h-96 py-80 flex justify-center items-center'>
       404 Not found.
     </div>
+    </LayoutIndex>
   )
 }
 
@@ -427,7 +424,7 @@ const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
   return (
-    <>
+    <LayoutIndex {...props}>
       <div className='bg-white dark:bg-gray-700 py-10'>
         <div className='dark:text-gray-200 mb-5'>
           <i className='mr-4 fas fa-th' />
@@ -453,7 +450,7 @@ const LayoutCategoryIndex = props => {
           })}
         </div>
       </div>
-    </>
+    </LayoutIndex>
   )
 }
 
@@ -465,7 +462,7 @@ const LayoutTagIndex = props => {
   const { locale } = useGlobal()
 
   return (
-    <>
+    <LayoutIndex {...props}>
       <div className='bg-white dark:bg-gray-700 py-10'>
         <div className='dark:text-gray-200 mb-5'>
           <i className='mr-4 fas fa-tag' />
@@ -481,7 +478,7 @@ const LayoutTagIndex = props => {
           })}
         </div>
       </div>
-    </>
+    </LayoutIndex>
   )
 }
 
