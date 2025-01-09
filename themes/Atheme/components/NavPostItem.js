@@ -12,7 +12,7 @@ import BlogPostCard from './BlogPostCard'
  * @constructor
  */
 const NavPostItem = props => {
-  const { group, expanded, toggleItem } = props // 接收传递的展开状态和切换函数
+  const { group, expanded, toggleItem, sortmethod } = props; // 接收传递的展开状态、切换函数和排序方法
   const hoverExpand = siteConfig('GITBOOK_FOLDER_HOVER_EXPAND')
   const [isTouchDevice, setIsTouchDevice] = useState(false)
   console.log('props', props)
@@ -47,29 +47,38 @@ const NavPostItem = props => {
 
   const groupHasLatest = group?.items?.some(post => post.isLatest)
 
-  if (group?.category) {
+  const sortedItems = group?.items ? [...group.items] : [];
+  sortedItems.sort((a, b) => b.time - a.time); // 从新到旧排序
+
+  if (group?.category && sortmethod === 'category') {
     return (
       <>
         <div
           onMouseEnter={onHoverToggle}
           onClick={toggleOpenSubMenu}
-          className='cursor-pointer relative flex justify-between text-md p-2 hover:bg-gray-50 rounded-md dark:hover:bg-yellow-100 dark:hover:text-yellow-600'
+          className='group cursor-pointer relative flex justify-between text-md p-2 hover:bg-zinc-200 duration-300 rounded-md dark:hover:bg-yellow-100 dark:hover:text-yellow-600'
           key={group?.category}>
           <span className={`${expanded && 'font-semibold'}`}>
             {group?.category}
           </span>
           <div className='inline-flex items-center select-none pointer-events-none '>
-            <i
-              className={`px-2 fas fa-chevron-left transition-all opacity-50 duration-700 ${expanded ? '-rotate-90' : ''}`}></i>
+            <div className='absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center'>
+              <div
+                className={`w-3 h-0.5 bg-gray-500 rounded transition-all duration-150 ${
+                  expanded
+                    ? '!w-2 !h-2 !border-t-2 !border-r-2 !border-gray-500 !bg-transparent !rounded-none transform rotate-135 '
+                    : 'group-hover:w-3 group-hover:h-3 group-hover:border-2 group-hover:border-gray-500 group-hover:bg-transparent group-hover:rounded-full'
+                }`}></div>
+            </div>
           </div>
           {groupHasLatest &&
             siteConfig('GITBOOK_LATEST_POST_RED_BADGE') &&
             !expanded && <Badge />}
         </div>
         <Collapse isOpen={expanded} onHeightChange={props.onHeightChange}>
-          {group?.items?.map((post, index) => (
-            <div key={index} className='ml-3'>
-              <BlogPostCard className='ml-3' post={post} />
+          {sortedItems.map((post, index) => (
+            <div key={index} className=''>
+              <BlogPostCard className='' post={post} />
             </div>
           ))}
         </Collapse>
@@ -78,7 +87,7 @@ const NavPostItem = props => {
   } else {
     return (
       <>
-        {group?.items?.map((post, index) => (
+        {sortedItems.map((post, index) => (
           <div key={index}>
             <BlogPostCard className='text-md py-2' post={post} />
           </div>

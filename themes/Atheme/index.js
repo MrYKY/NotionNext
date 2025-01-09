@@ -63,6 +63,7 @@ function getNavPagesWithLatest(allNavPages, latestPosts, post) {
       short_id: item.short_id,
       title: item.title || '',
       date: item.date || '',
+      time: item.time || '',
       pageCoverThumbnail: item.pageCoverThumbnail || '',
       category: item.category || null,
       tags: item.tags || null,
@@ -175,10 +176,10 @@ const LayoutIndex = props => {
         <Header {...props} />
         {/* 左侧推拉抽屉 */}
         {fullWidth ? null : (
-          <div className={'hidden md:block relative z-10 '}>
-            <div className='w-72 pt-6 pb-4 sticky top-0 h-full flex justify-between flex-col border-r'>
+          <div className={'hidden md:block relative z-10 w-full max-w-80'}>
+            <div className='sticky top-0 h-full flex justify-between flex-col border-r'>
               {/* 导航 */}
-              <div className='overflow-y-scroll scroll-hidden pt-10'>
+              <div className='overflow-y-scroll scroll-hidden pt-20'>
                 {/* 嵌入 */}
                 {slotLeft}
 

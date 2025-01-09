@@ -13,23 +13,23 @@ const BlogPostCard = ({ post, className }) => {
     <Link href={post?.href} passHref>
       <div
         key={post.id}
-        className={`${className} relative py-1.5 cursor-pointer px-1.5 rounded-md hover:bg-gray-50
-                    ${currentSelected ? 'text-green-500 dark:bg-yellow-100 dark:text-yellow-600 font-semibold' : ' dark:hover:bg-yellow-100 dark:hover:text-yellow-600'}`}>
-        <div className='w-full select-none flex items-center justify-between'>
-          <div>
+        className={`${className} relative p-2 my-1 cursor-pointer rounded-md duration-300
+                    ${currentSelected ? 'text-white dark:bg-yellow-100 dark:text-yellow-600 bg-slate-800 ' : ' dark:hover:bg-yellow-100 dark:hover:text-yellow-600 hover:bg-zinc-200 '}`}>
+        <div className='w-full select-none flex items-start'>
+          <div className='text-3xl my-auto'>
             {siteConfig('POST_TITLE_ICON') && (
               <NotionIcon icon={post?.pageIcon} />
             )}{' '}
           </div>
-          <div className='flex flex-col items-center'>
+          <div className='flex flex-col items-start'>
             <span className='text-sm'>{post.title}</span>
             <span className='text-xs text-gray-400'>{post?.date}</span>
           </div>
         </div>
         {/* 最新文章加个红点 */}
-        {post?.isLatest && siteConfig('GITBOOK_LATEST_POST_RED_BADGE') && (
+        {/* {post?.isLatest && siteConfig('GITBOOK_LATEST_POST_RED_BADGE') && (
           <Badge />
-        )}
+        )} */}
       </div>
     </Link>
   )

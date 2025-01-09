@@ -16,7 +16,7 @@ export default function LogoBar(props) {
       className='w-full flex pt-2 flex-col justify-between '>
       <Link
         href={`/${siteConfig('GITBOOK_INDEX_PAGE', '', CONFIG)}`}
-        className='flex text-3xl font-extrabold md:text-2xl dark:text-gray-200 gap-x-2 hover:bg-zinc-200 mx-2 p-2 rounded-lg'>
+        className='flex text-3xl font-extrabold md:text-2xl dark:text-gray-200 gap-x-2 hover:bg-zinc-200 duration-300 mx-2 p-2 rounded-lg'>
         <LazyImage
           src={siteInfo?.icon}
           width={48}
