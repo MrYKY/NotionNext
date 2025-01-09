@@ -174,7 +174,7 @@ const LayoutIndex = props => {
     <div className='w-full h-full'>
       <main
         id='wrapper'
-        className={`${siteConfig('LAYOUT_SIDEBAR_REVERSE') ? 'flex-row-reverse' : ''} relative flex justify-between w-full gap-x-6 h-full mx-auto`}>
+        className={`${siteConfig('LAYOUT_SIDEBAR_REVERSE') ? 'flex-row-reverse' : ''} relative flex justify-between w-full h-full mx-auto`}>
         {/* 顶部导航栏 */}
         <Header {...props} />
         {/* 左侧推拉抽屉 */}
@@ -217,7 +217,7 @@ const LayoutIndex = props => {
         {fullWidth ? null : (
           <div
             className={
-              'w-72 hidden 2xl:block dark:border-transparent flex-shrink-0 relative z-10 '
+              'w-auto min-w-48 hidden 2xl:block dark:border-transparent flex-shrink-0 relative z-10 '
             }>
             <div className='py-14 sticky top-0'>
               {/* <ArticleInfo post={props?.post ? props?.post : props.notice} /> */}

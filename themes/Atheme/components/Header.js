@@ -63,7 +63,7 @@ export default function Header(props) {
   const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
   return (
-    <div id='top-nav' className={'z-20 h-full border-r lg:w-80 bg-zinc-50 ' + className}>
+    <div id='top-nav' className={'z-20 h-full border-r lg:min-w-60 bg-zinc-50 ' + className}>
       {/* PC端菜单 */}
       <div className='flex flex-col justify-start dark:border-black items-start w-full dark:bg-hexo-black-gray relative '>
         <div className='max-w-screen-4xl w-full flex flex-col gap-y-10 justify-between items-center '>

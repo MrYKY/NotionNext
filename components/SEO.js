@@ -15,9 +15,7 @@ const SEO = props => {
   const PATH = siteConfig('PATH')
   const LINK = siteConfig('LINK')
   const SUB_PATH = siteConfig('SUB_PATH', '')
-  let url = PATH?.length
-    ? `${LINK}/${SUB_PATH}`
-    : LINK
+  let url = PATH?.length ? `${LINK}/${SUB_PATH}` : LINK
   let image
   const router = useRouter()
   const meta = getSEOMeta(props, router, useGlobal()?.locale)
@@ -266,6 +264,14 @@ const getSEOMeta = (props, router, locale) => {
         description: `${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'category',
+        type: 'website'
+      }
+    case '/blog':
+      return {
+        title: `${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
+        description: `${siteInfo?.description}`,
+        image: `${siteInfo?.pageCover}`,
+        slug: 'blog',
         type: 'website'
       }
     default:

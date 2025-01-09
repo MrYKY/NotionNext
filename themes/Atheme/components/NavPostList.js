@@ -96,7 +96,7 @@ const NavPostList = props => {
       id='posts-wrapper'
       className='w-full flex-grow space-y-0.5 pr-4 tracking-wider'>
       {/* 当前文章 */}
-      <BlogPostCard className='mb-4' post={homePost} />
+      {/* <BlogPostCard className='mb-4' post={homePost} /> */}
 
       {/* 文章列表 */}
       {categoryFolders?.map((group, index) => (
