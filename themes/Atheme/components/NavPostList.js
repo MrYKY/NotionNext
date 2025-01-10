@@ -114,7 +114,8 @@ const NavPostList = props => {
       id='posts-wrapper'
       className='w-full flex-grow space-y-0.5 px-2 tracking-wider '>
       {/* 右上角按钮 */}
-      <div className='flex items-center justify-end'>
+      <div className='flex items-center justify-between border-b pb-2 mb-2'>
+      <div className='px-1 font-bold text-base '>所有文章</div>
       <button
         onClick={toggleSortMethod}
         className='p-2 text-base hover:bg-zinc-200 dark:hover:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-700'

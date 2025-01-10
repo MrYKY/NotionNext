@@ -427,9 +427,9 @@ summary > .notion-h {
   margin-top: 0;
 }
 
-.notion-h1:first-child {
+/* .notion-h1:first-child {
   margin-top: 0;
-}
+} */
 /* .notion-h1:first-of-type {
   margin-top: 2px;
 } */
@@ -542,23 +542,12 @@ summary > .notion-h {
   font-size: 14px;
 }
 
-.notion-quote {
-  display: block;
-  width: 100%;
-  white-space: pre-wrap;
-  word-break: break-word;
-  border-left: 3px solid currentcolor;
-  padding: 0.2em 0.9em;
-  margin: 6px 0;
-  font-size: 1.2em;
-}
-
 .notion-hr {
   width: 100%;
   margin: 10px 0;
   padding: 0;
   border-top: solid 1px ;
-  border-color: (55, 53, 47);
+  @apply border-gray-200
   /* border-bottom-width: 1px; */
 }
 
@@ -931,15 +920,22 @@ code[class*='language-'] {
 }
 
 .notion-callout {
-  padding: 16px 16px 16px 12px;
   display: inline-flex;
   width: 100%;
-  border-radius: 6px;
-  border-width: 1px;
   align-items: center;
   box-sizing: border-box;
-  margin: 4px 0;
-  border: 1px solid var(--fg-color-0);
+  @apply relative rounded-2xl py-4 px-10 my-2 bg-transparent border-0
+}
+
+.notion-callout::before {
+  content: "";
+  @apply
+    absolute
+    inset-0 inset-x-6 bg-stone-100
+    border -z-10 
+    border-gray-200 /* 边框颜色 */
+    rounded-xl 
+    pointer-events-none; /* 禁止伪元素响应鼠标事件，以免干扰内容点击 */
 }
 
 .dark-mode .notion-callout {
@@ -947,17 +943,21 @@ code[class*='language-'] {
 }
 
 .notion-callout .notion-page-icon {
-  align-self: flex-start;
   width: 24px;
   height: 24px;
   font-size: 1em;
   line-height: 1em;
+}
+.notion-callout .notion-page-icon-inline {
+  align-items: center;
 }
 
 .notion-callout-text {
   margin-left: 8px;
   white-space: pre-wrap;
   word-break: break-word;
+  font-size: 90%;
+  line-height: normal;
   overflow: hidden;
 }
 
@@ -1675,11 +1675,9 @@ code[class*='language-'] {
 }
 .notion,
 .notion-text,
-.notion-quote,
 .notion-h-title {
-  @apply leading-8;
+  @apply leading-7;
   @apply p-0;
-  @apply my-3;
 }
 .notion-page-link {
   color: inherit;
@@ -1733,9 +1731,7 @@ svg + .notion-page-title-text {
   @apply w-auto;
   @apply px-0;
 }
-.notion-quote {
-  padding: 0.2em 0.9em;
-}
+
 
 .notion-collection {
   align-self: center;
@@ -1965,26 +1961,31 @@ svg + .notion-page-title-text {
   display: block !important;
 }
 
-/* https://github.com/kchen0x */
+
 .notion-quote {
-  display: block;
-  border-radius: 2px;
-  border-color: var(--notion-blue);
-  border-width: 1px;
-  border-left-color: var(--notion-blue);
-  background-color: var(--notion-blue_background_co);
-  width:100%;
-  white-space: pre-wrap;
-  word-break: break-word;
-  border-left: 10px solid;
-  padding: 0.2em 0.9em;
-  margin: 6px 20px;
-  font-size: 1em;
-  font-size: 120%;
-  /* color: var(--notion-gray); */
-  @apply transition-all duration-200 ease-in-out
+  @apply relative w-full       /* 占满父容器宽度 */
+    px-10 py-2                  /* 给文字一个合适的左内边距，以免和竖线重叠 */
+    box-border
+    border-0                 /* 避免内边距和宽度计算问题 */
+    text-base
+    font-light
+    font-serif
+    text-gray-600
+    whitespace-pre-wrap
+    break-words;               /* Tailwind 中对应 white-space: pre-wrap; word-break: break-word; */
 }
 
+/* 使用 ::before 做左侧竖线 */
+.notion-quote::before {
+  content: "";
+  @apply absolute              /* 通过绝对定位来精确控制位置 */
+    inset-y-0                  /* 等价于 top:0; bottom:0; 让竖线自上而下撑满 */
+    left-4                     /* 这里就是关键：把竖线整体向右移动一些 */
+    w-[2px]                    /* 竖线的宽度 */
+    bg-gray-300
+    
+    rounded-full                /* 圆角 */
+}
 
 /* .notion-asset-wrapper-pdf > div {
   width: unset !important;

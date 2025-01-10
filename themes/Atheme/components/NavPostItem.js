@@ -76,8 +76,8 @@ const NavPostItem = props => {
         </div>
         <Collapse isOpen={expanded} onHeightChange={props.onHeightChange}>
           {sortedItems.map((post, index) => (
-            <div key={index} className=''>
-              <BlogPostCard className='' post={post} />
+            <div key={index} >
+              <BlogPostCard post={post} />
             </div>
           ))}
         </Collapse>
@@ -87,7 +87,7 @@ const NavPostItem = props => {
     return (
       <>
         {sortedItems.map((post, index) => (
-          <div key={index}>
+          <div key={index} >
             <BlogPostCard className='text-md py-2' post={post} />
           </div>
         ))}

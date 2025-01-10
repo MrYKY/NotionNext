@@ -351,7 +351,7 @@ const LayoutSlug = props => {
           {/* title */}
           <h1 className='text-3xl pt-12  dark:text-gray-300'>
             {siteConfig('POST_TITLE_ICON') && (
-              <NotionIcon icon={post?.pageIcon} />
+              <NotionIcon icon={post?.pageIcon} className='mr-2' />
             )}
             {post?.title}
           </h1>

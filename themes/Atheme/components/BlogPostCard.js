@@ -13,10 +13,10 @@ const BlogPostCard = ({ post, className }) => {
     <Link href={post?.href} passHref>
       <div
         key={post.id}
-        className={`${className} relative p-2 my-1 cursor-pointer rounded-md duration-300
+        className={`${className} relative p-2 my-1 cursor-pointer rounded-md duration-300 merge-out
                     ${currentSelected ? 'text-white dark:bg-yellow-100 dark:text-yellow-600 bg-slate-800 ' : ' dark:hover:bg-yellow-100 dark:hover:text-yellow-600 hover:bg-zinc-200 '}`}>
         <div className='w-full select-none flex items-start'>
-          <div className='text-3xl my-auto'>
+          <div className='text-2xl my-auto mr-2'>
             {siteConfig('POST_TITLE_ICON') && (
               <NotionIcon icon={post?.pageIcon} />
             )}{' '}

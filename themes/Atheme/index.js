@@ -194,7 +194,7 @@ const LayoutIndex = props => {
         {/* 中间内容区域 */}
         <div
           id='center-wrapper'
-          className='flex flex-col justify-between w-full h-full overflow-y-auto scroll-hidden relative z-10'>
+          className='flex flex-col justify-start items-center w-full h-full overflow-y-auto scroll-hidden relative z-10'>
           <div
             id='container-inner'
             className={`w-full ${fullWidth ? 'px-5' : 'max-w-3xl px-3 lg:px-0'} justify-center mx-auto`}>
@@ -222,18 +222,6 @@ const LayoutIndex = props => {
                 {/* 桌面端目录 */}
                 <Catalog {...props} />
                 {slotRight}
-                {router.route === '/' && (
-                  <>
-                    {/* <InfoCard {...props} /> */}
-                    {siteConfig(
-                      'GITBOOK_WIDGET_REVOLVER_MAPS',
-                      null,
-                      CONFIG
-                    ) === 'true' && <RevolverMaps />}
-                  </>
-                )}
-                {/* gitbook主题首页只显示公告 */}
-                {/* <Announcement {...props} /> */}
               </div>
 
               {/* <AdSlot type='in-article' /> */}
@@ -323,16 +311,16 @@ const LayoutSlug = props => {
       {!lock && (
         <div id='container'>
           {/* title */}
-          <h1 className='text-3xl pt-12  dark:text-gray-300'>
+          <h1 className='text-4xl py-12 font-black dark:text-gray-300'>
             {siteConfig('POST_TITLE_ICON') && (
-              <NotionIcon icon={post?.pageIcon} />
+              <NotionIcon icon={post?.pageIcon} className='pl-2' />
             )}
             {post?.title}
           </h1>
 
           {/* Notion文章主体 */}
           {post && (
-            <section className='px-1'>
+            <section className=''>
               <div id='article-wrapper'>
                 <NotionPage post={post} />
               </div>
@@ -364,7 +352,7 @@ const LayoutSlug = props => {
           )}
 
           {/* 文章目录 */}
-          <CatalogDrawerWrapper {...props} />
+          {/* <CatalogDrawerWrapper {...props} /> */}
         </div>
       )}
     </LayoutIndex>

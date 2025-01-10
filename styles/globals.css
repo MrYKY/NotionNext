@@ -315,3 +315,20 @@ img {
 .rotate-135 {
   transform: rotate(135deg);
 }
+
+.merge-out {
+  opacity: 0; /* 初始状态：完全透明 */
+  transform: translateY(100px) scale(0.2); /* 初始状态：从下方移动 50px */
+  animation: fadeInUp 0.4s ease-out forwards; /* 应用动画 */
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0; /* 动画开始：完全透明 */
+    transform: translateY(100px) scale(0.2); /* 动画开始：从下方移动 50px */
+  }
+  to {
+    opacity: 1; /* 动画结束：完全不透明 */
+    transform: translateY(0); /* 动画结束：移动到目标位置 */
+  }
+}
