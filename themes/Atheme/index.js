@@ -149,7 +149,6 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = props => {
-  console.log('Enter LayoutIndex', props)
   const router = useRouter()
   const {
     children,
