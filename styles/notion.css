@@ -724,6 +724,7 @@ svg.notion-page-icon {
   word-break: break-word;
   padding: 3px 2px !important;
   margin: 1px 0 !important;
+  @apply rounded-lg inline-block
 }
 
 .notion-text:first-child {

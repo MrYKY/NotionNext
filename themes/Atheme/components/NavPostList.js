@@ -118,9 +118,9 @@ const NavPostList = props => {
       <div className='px-1 font-bold text-base '>所有文章</div>
       <button
         onClick={toggleSortMethod}
-        className='p-2 text-base hover:bg-zinc-200 dark:hover:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-700'
+        className='p-2 text-base hover:bg-zinc-200 dark:hover:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-700 transition-all duration-300 '
         aria-label='切换排序方式'
-        style={{ width: '30px', height: '30px' }} // 设置为正方形
+        style={{ width: '2em', height: '2em' }} // 设置为正方形
       >
         <span className='emoji-container flex items-center justify-center w-full h-full'>
           <span className='emoji'>{emoji}</span>

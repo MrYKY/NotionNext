@@ -289,15 +289,15 @@ img {
 
 /* 自定义变量来配置阴影宽度和软化程度 */
 :root {
-  --shadow-width: 0px; /* 阴影扩展宽度 */
-  --shadow-softness: 2px; /* 阴影模糊半径 */
+  --shadow-width: 3px; /* 阴影扩展宽度 */
+  --shadow-softness: 0px; /* 阴影模糊半径 */
   --shadow-opacity: 1; /* 阴影透明度 */
 }
 
 /* 使元素带有动态阴影效果 */
 .focused {
   box-shadow: 0 0 var(--shadow-softness) var(--shadow-width)
-    rgba(52, 52, 52, 0.2);
+    rgb(219, 219, 219);
 }
 
 .outer-border {
