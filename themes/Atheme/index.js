@@ -178,7 +178,7 @@ const LayoutIndex = props => {
           <div className={'hidden md:block relative z-10 w-full max-w-80'}>
             <div className='sticky top-0 h-full flex justify-between flex-col border-r'>
               {/* 导航 */}
-              <div className='overflow-y-scroll scroll-hidden pt-20'>
+              <div className='overflow-y-scroll scroll-hidden pt-2'>
                 {/* 嵌入 */}
                 {slotLeft}
 
