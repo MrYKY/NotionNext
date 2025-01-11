@@ -39,6 +39,7 @@ import TagItemMini from './components/TagItemMini'
 import OuterBorder from './components/OuterBorder'
 import CONFIG from './config'
 import { Style } from './style'
+import LazyImage from '@/components/LazyImage'
 
 // 主题全局变量
 const ThemeGlobalGitbook = createContext()
@@ -150,6 +151,7 @@ const LayoutBase = props => {
  */
 const LayoutIndex = props => {
   const router = useRouter()
+  const basePath = router.asPath.split('?')[0]
   const {
     children,
     post,
@@ -166,6 +168,13 @@ const LayoutIndex = props => {
     setFilteredNavPages(getNavPagesWithLatest(allNavPages, latestPosts, post))
   }, [router])
 
+  // 检查当前路由是否在文章列表内
+  const isRouteInPostList = () => {
+    const currentPath = decodeURIComponent(basePath)
+    const allPosts = filteredNavPages || []
+    return allPosts.some(post => post.href === currentPath)
+  }
+
   return (
     <div className='w-full h-full'>
       <main
@@ -174,7 +183,7 @@ const LayoutIndex = props => {
         {/* 顶部导航栏 */}
         <Header {...props} />
         {/* 左侧推拉抽屉 */}
-        {fullWidth ? null : (
+        {!fullWidth && isRouteInPostList() ? (
           <div className={'hidden md:block relative z-10 w-full max-w-80'}>
             <div className='sticky top-0 h-full flex justify-between flex-col border-r'>
               {/* 导航 */}
@@ -189,7 +198,7 @@ const LayoutIndex = props => {
               {/* <Footer {...props} /> */}
             </div>
           </div>
-        )}
+        ) : null}
 
         {/* 中间内容区域 */}
         <div
@@ -199,8 +208,7 @@ const LayoutIndex = props => {
             id='container-inner'
             className={`w-full ${fullWidth ? 'px-5' : 'max-w-3xl px-3 lg:px-0'} justify-center mx-auto`}>
             {slotTop}
-
-            {children}
+            {basePath?.indexOf('blog') > 0 ? <_LayoutBlogHome /> : children}
           </div>
 
           {/* 底部 */}
@@ -213,11 +221,10 @@ const LayoutIndex = props => {
         {fullWidth ? null : (
           <div
             className={
-              'w-auto min-w-48 hidden 2xl:block dark:border-transparent flex-shrink-0 relative z-10 '
+              'min-w-60 hidden 2xl:flex dark:border-transparent h-full flex-col items-start justify-center relative z-10 border-l bg-zinc-50'
             }>
-            <div className='py-14 sticky top-0'>
+            <div>
               {/* <ArticleInfo post={props?.post ? props?.post : props.notice} /> */}
-
               <div>
                 {/* 桌面端目录 */}
                 <Catalog {...props} />
@@ -255,6 +262,18 @@ const LayoutMainPage = props => {
   )
 }
 
+const _LayoutBlogHome = props => {
+  // 返回主页内容
+  return (
+    <div className='w-full h-96 py-80 flex flex-col justify-center items-center'>
+      <h1 className='text-3xl text-'>博客主页</h1>
+      <div className='text-2xl text-gray-300'>
+        <Link href='/blog'>原地TP</Link>
+      </div>
+    </div>
+  )
+}
+
 /**
  * 文章列表 无
  * 全靠页面导航
@@ -272,6 +291,7 @@ const LayoutPostList = props => {
  */
 const LayoutSlug = props => {
   const { post, prev, next, siteInfo, lock, validPassword } = props
+  const headerImage = post?.pageCover ? post.pageCover : siteInfo?.pageCover
   const router = useRouter()
   // 如果是文档首页文章，则修改浏览器标签
   const index = siteConfig('GITBOOK_INDEX_PAGE', 'about', CONFIG)
@@ -311,12 +331,25 @@ const LayoutSlug = props => {
       {!lock && (
         <div id='container'>
           {/* title */}
-          <h1 className='text-4xl py-12 font-black dark:text-gray-300'>
+          <div
+              id='post-cover-wrapper'
+              className='coverdiv absolute top-0 left-0 w-full h-[25vh] max-h-[25vh] overflow-hidden'>
+              <LazyImage
+                id='post-cover'
+                className='w-full max-h-[400px] object-cover'
+                src={headerImage}
+              />
+            </div>
+          <div id='header' className='flex flex-col mt-[25vh] justify-between items-start'>
+            <div id='post-icon' className='flex items-center text-8xl z-30 leading-none -translate-y-1/2 '>
             {siteConfig('POST_TITLE_ICON') && (
-              <NotionIcon icon={post?.pageIcon} className='pl-2' />
-            )}
-            {post?.title}
-          </h1>
+                <NotionIcon icon={post?.pageIcon} />
+              )}
+            </div>
+            <h1 className='text-4xl font-black dark:text-gray-300'>
+              {post?.title}
+            </h1>
+          </div>
 
           {/* Notion文章主体 */}
           {post && (
@@ -399,9 +432,9 @@ const LayoutArchive = props => {
 const Layout404 = props => {
   return (
     <LayoutIndex {...props}>
-    <div className='w-full h-96 py-80 flex justify-center items-center'>
-      404 Not found.
-    </div>
+      <div className='w-full h-96 py-80 flex justify-center items-center'>
+        404 Not found.
+      </div>
     </LayoutIndex>
   )
 }

@@ -289,7 +289,7 @@ img {
 
 /* 自定义变量来配置阴影宽度和软化程度 */
 :root {
-  --shadow-width: 3px; /* 阴影扩展宽度 */
+  --shadow-width: 2px; /* 阴影扩展宽度 */
   --shadow-softness: 0px; /* 阴影模糊半径 */
   --shadow-opacity: 1; /* 阴影透明度 */
 }
@@ -331,4 +331,23 @@ img {
     opacity: 1; /* 动画结束：完全不透明 */
     transform: translateY(0); /* 动画结束：移动到目标位置 */
   }
+}
+#post-icon {
+  position: relative; /* 确保伪元素相对于此元素定位 */
+  z-index: 30; /* 确保元素在模糊层之上 */
+}
+
+#post-icon::before {
+  content: ''; /* 伪元素必须设置 content */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 居中 */
+  width: 150%; /* 比实际元素更大 */
+  height: 150%;
+  background: inherit; /* 继承父元素的背景 */
+  filter: blur(20px); /* 模糊效果 */
+  z-index: -1; /* 将模糊层放到元素背后 */
+  opacity: 0.8; /* 调整模糊层的透明度 */
+  border-radius: 50%; /* 如果需要圆形辐射效果 */
 }

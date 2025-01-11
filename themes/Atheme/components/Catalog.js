@@ -11,17 +11,19 @@ import { useCallback, useEffect, useState } from 'react'
  */
 const Catalog = ({ post }) => {
   const toc = post?.toc
+  // console.log('Enter Catalog: ', post)
   // 同步选中目录事件
   const [activeSection, setActiveSection] = useState(null)
 
   // 监听滚动事件
   useEffect(() => {
-    window.addEventListener('scroll', actionSectionScrollSpy)
+    const scrollContainer = document.getElementById('center-wrapper');
+    scrollContainer.addEventListener('scroll', actionSectionScrollSpy)
     actionSectionScrollSpy()
     return () => {
-      window.removeEventListener('scroll', actionSectionScrollSpy)
+      scrollContainer.removeEventListener('scroll', actionSectionScrollSpy)
     }
-  }, [post])
+  }, [post] )
 
   const throttleMs = 200
   const actionSectionScrollSpy = useCallback(
@@ -54,7 +56,7 @@ const Catalog = ({ post }) => {
         for (const tocWrapper of document?.getElementsByClassName(
           'toc-wrapper'
         )) {
-          tocWrapper?.scrollTo({ top: 28 * index, behavior: 'smooth' })
+          tocWrapper?.scrollTo({ top: 16 * index - 180, behavior: 'smooth' })
         }
       }
     }, throttleMs)
@@ -66,38 +68,90 @@ const Catalog = ({ post }) => {
   }
 
   return (
-    <>
-      {/* <div className='w-full hidden md:block'>
-        <i className='mr-1 fas fa-stream' />{locale.COMMON.TABLE_OF_CONTENTS}
-        </div> */}
+    <div
+      id='toc-wrapper'
+      className='toc-wrapper overflow-y-auto my-2 max-h-96 overscroll-none scroll-hidden transition-all duration-500 ease-in-out'>
+       
+      <nav className=''>
+        {toc?.map(tocItem => {
+          const id = uuidToId(tocItem.id)
+          const isActive = activeSection === id
+          const lineWidth = 16 + (16 - tocItem.indentLevel * 8)
 
-      <div
-        id='toc-wrapper'
-        className='toc-wrapper overflow-y-auto my-2 max-h-80 overscroll-none scroll-hidden'>
-        <nav className='h-full text-black'>
-          {toc?.map(tocItem => {
-            const id = uuidToId(tocItem.id)
-            return (
-              <a
-                key={id}
-                href={`#${id}`}
-                //  notion-table-of-contents-item
-                className={`${activeSection === id && 'border-green-500 text-green-500 font-bold'} border-l pl-4 block hover:text-green-500 border-lduration-300 transform font-light dark:text-gray-300
-              notion-table-of-contents-item-indent-level-${tocItem.indentLevel} catalog-item `}>
-                <span
-                  style={{
-                    display: 'inline-block',
-                    marginLeft: tocItem.indentLevel * 16
-                  }}
-                  className={`truncate`}>
-                  {tocItem.text}
-                </span>
-              </a>
-            )
-          })}
-        </nav>
-      </div>
-    </>
+          return (
+            <a
+              key={id}
+              href={`#${id}`}
+              style={{ '--dynamic-w': `${lineWidth}px` }}
+              onClick={() => {
+                // 1. 立马更新选中状态
+                setActiveSection(uuidToId(tocItem.id))}}
+              // 当条目处于 active 时或 hover 时，通过 Tailwind 的 group/hover 等类名实现动态展示
+              className={`
+                relative
+                group
+                transition-all
+                duration-1000
+                ease-in-out
+                flex
+                items-center
+                justify-start
+                px-2
+                py-0.5
+                notion-table-of-contents-item-indent-level-${tocItem.indentLevel}
+                ${
+                  isActive
+                    ? 'text-xs py-2' // activeSection 时：文字加粗 + 较大间距
+                    : 'hover:py-2'
+                }
+              `}>
+              {/* 圆角灰色短横线 */}
+              <span
+                className={`
+                  flex
+                  h-1
+                  bg-gray-300
+                  rounded-full
+                  transition-all
+                  duration-0
+                  ease-in-out
+                  w-[var(--dynamic-w)]
+                  ${
+                    isActive
+                      ? ' opacity-0 hidden' // active 时，短横线淡出 + 宽度收缩
+                      : ' group-hover:opacity-0 group-hover:w-0 '
+                  }
+                `}
+              />
+
+              {/* 文字内容（active 时或 hover 时显示） */}
+              <span
+                className={`
+                  whitespace-nowrap
+                  overflow-hidden
+                  text-ellipsis
+                  max-w-40
+                  duration-300
+                  transition-[opacity,scale,padding]
+                  text-gray-500
+                  bg-gray-200
+                  rounded-md
+                  ease-in-out
+                  p-0
+                  text-xs
+                   ${
+                     isActive
+                       ? 'opacity-100 font-medium p-1'
+                       : 'opacity-0 scale-0 group-hover:opacity-100 leading-none group-hover:scale-100 group-hover:p-1'
+                   }
+                `}>
+                {tocItem.text}
+              </span>
+            </a>
+          )
+        })}
+      </nav>
+    </div>
   )
 }
 
