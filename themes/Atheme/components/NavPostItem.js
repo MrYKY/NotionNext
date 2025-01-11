@@ -70,9 +70,6 @@ const NavPostItem = props => {
                 }`}></div>
             </div>
           </div>
-          {groupHasLatest &&
-            siteConfig('GITBOOK_LATEST_POST_RED_BADGE') &&
-            !expanded && <Badge />}
         </div>
         <Collapse isOpen={expanded} onHeightChange={props.onHeightChange}>
           {sortedItems.map((post, index) => (

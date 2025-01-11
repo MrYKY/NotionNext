@@ -8,6 +8,7 @@ module.exports = {
     '-1': 'LayoutBase',
     '/': 'LayoutMainPage',
     '/blog': 'LayoutIndex',
+    '/allposts': 'LayoutPostList',
     '/archive': 'LayoutArchive',
     '/page/[page]': 'LayoutPostList',
     '/category/[category]': 'LayoutPostList',

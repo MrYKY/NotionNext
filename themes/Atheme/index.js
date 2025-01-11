@@ -40,6 +40,7 @@ import OuterBorder from './components/OuterBorder'
 import CONFIG from './config'
 import { Style } from './style'
 import LazyImage from '@/components/LazyImage'
+import AllPostList from './components/AllPostList'
 
 // 主题全局变量
 const ThemeGlobalGitbook = createContext()
@@ -192,7 +193,7 @@ const LayoutIndex = props => {
                 {slotLeft}
 
                 {/* 所有文章列表 */}
-                <NavPostList filteredNavPages={filteredNavPages} {...props} />
+                <NavPostList filteredNavPages={allNavPages} {...props} />
               </div>
               {/* 页脚 */}
               {/* <Footer {...props} /> */}
@@ -206,7 +207,7 @@ const LayoutIndex = props => {
           className='flex flex-col justify-start items-center w-full h-full overflow-y-auto scroll-hidden relative z-10'>
           <div
             id='container-inner'
-            className={`w-full ${fullWidth ? 'px-5' : 'max-w-3xl px-3 lg:px-0'} justify-center mx-auto`}>
+            className={` ${fullWidth ? 'px-5' : ''} w-full mx-auto flex item-center justify-center`}>
             {slotTop}
             {basePath?.indexOf('blog') > 0 ? <_LayoutBlogHome /> : children}
           </div>
@@ -281,7 +282,14 @@ const _LayoutBlogHome = props => {
  * @returns
  */
 const LayoutPostList = props => {
-  return <></>
+  const {
+    allNavPages
+  } = props
+  return (
+    <LayoutIndex {...props}>
+      <AllPostList filteredNavPages={allNavPages} {...props} />
+    </LayoutIndex>
+  )
 }
 
 /**
@@ -329,20 +337,24 @@ const LayoutSlug = props => {
       {lock && <ArticleLock validPassword={validPassword} />}
 
       {!lock && (
-        <div id='container'>
+        <div id='container' className='max-w-3xl px-3 lg:px-0 '>
           {/* title */}
           <div
-              id='post-cover-wrapper'
-              className='coverdiv absolute top-0 left-0 w-full h-[25vh] max-h-[25vh] overflow-hidden'>
-              <LazyImage
-                id='post-cover'
-                className='w-full max-h-[400px] object-cover'
-                src={headerImage}
-              />
-            </div>
-          <div id='header' className='flex flex-col mt-[25vh] justify-between items-start'>
-            <div id='post-icon' className='flex items-center text-8xl z-30 leading-none -translate-y-1/2 '>
-            {siteConfig('POST_TITLE_ICON') && (
+            id='post-cover-wrapper'
+            className='absolute top-0 left-0 w-full h-[25vh] max-h-[25vh] overflow-hidden'>
+            <LazyImage
+              id='post-cover'
+              className='w-full max-h-[400px] object-cover'
+              src={headerImage}
+            />
+          </div>
+          <div
+            id='header'
+            className='flex flex-col mt-[25vh] justify-between items-start'>
+            <div
+              id='post-icon'
+              className='flex items-center text-8xl z-30 leading-none -translate-y-1/2 '>
+              {siteConfig('POST_TITLE_ICON') && (
                 <NotionIcon icon={post?.pageIcon} />
               )}
             </div>
@@ -355,7 +367,7 @@ const LayoutSlug = props => {
           {post && (
             <section className=''>
               <div id='article-wrapper'>
-                <NotionPage post={post} />
+                <NotionPage post={post} className='' />
               </div>
 
               {/* 分享 */}

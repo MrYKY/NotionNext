@@ -12,9 +12,9 @@ import { generateRedirectJson } from '@/lib/redirect'
  * @param {*} props
  * @returns
  */
-const Index = props => {
+const AllPosts = props => {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  const layoutName = siteConfig('INDEX_LAYOUT', BLOG.LAYOUT_MAPPINGS['/'], props.NOTION_CONFIG)
+  const layoutName = siteConfig('INDEX_LAYOUT', BLOG.LAYOUT_MAPPINGS['/allposts'], props.NOTION_CONFIG)
   return <DynamicLayout theme={theme} layoutName={layoutName} {...props} />
 }
 
@@ -24,7 +24,7 @@ const Index = props => {
  */
 export async function getStaticProps(req) {
   const { locale } = req
-  const from = 'index'
+  const from = 'all-post-page'
   const props = await getGlobalData({ from, locale })
   console.log('GlobalData: ' ,props)
   const POST_PREVIEW_LINES = siteConfig(
@@ -84,4 +84,4 @@ export async function getStaticProps(req) {
   }
 }
 
-export default Index
+export default AllPosts

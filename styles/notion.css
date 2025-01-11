@@ -201,6 +201,9 @@
 }
 
 .medium-zoom-image {
+
+  box-shadow: 0 0 0px 2px
+    rgb(219, 219, 219);
   border-radius: 6px;
   border-width: 1px;
   border-color: rgb(198, 198, 198);

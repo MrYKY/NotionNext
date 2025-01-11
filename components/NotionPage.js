@@ -67,7 +67,7 @@ const NotionPage = ({ post, className }) => {
                 'src',
                 compressImage(src, IMAGE_ZOOM_IN_WIDTH)
               )
-            }, 800)
+            }, 0)
           }
         }
       })
