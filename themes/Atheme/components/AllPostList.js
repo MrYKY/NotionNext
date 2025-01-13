@@ -3,8 +3,7 @@ import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import CONFIG from '../config'
-import BlogPostCard from './BlogPostCard'
-import NavPostItem from './NavPostItem'
+import PostItemFull from './PostItemFull'
 
 /**
  * 博客列表滚动分页
@@ -112,45 +111,46 @@ const AllPostList = props => {
   return (
     <div
       id='posts-wrapper'
-      className='w-full flex-grow space-y-0.5 px-2 tracking-wider pt-4'>
+      className='w-full flex-grow space-y-0.5 px-2 tracking-wider pt-4 items-center justify-center'>
       {/* 右上角按钮 */}
       <div className='flex items-center justify-between border-b pb-2 mb-2'>
-      <div className='px-1 font-bold text-xl '>所有文章</div>
-      <button
-        onClick={toggleSortMethod}
-        className='p-2 text-xl hover:bg-zinc-200 dark:hover:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-700 transition-all duration-300 '
-        aria-label='切换排序方式'
-        style={{ width: '3em', height: '3em' }} // 设置为正方形
-      >
-        <span className='emoji-container flex items-center justify-center w-full h-full'>
-          <span className='emoji'>{emoji}</span>
-        </span>
-      </button>
+        <div className='px-1 font-bold text-xl '>所有文章</div>
+        <button
+          onClick={toggleSortMethod}
+          className='p-2 text-xl hover:bg-zinc-200 dark:hover:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-700 transition-all duration-300 '
+          aria-label='切换排序方式'
+          style={{ width: '2em', height: '2em' }} // 设置为正方形
+        >
+          <span className='emoji-container flex items-center justify-center w-full h-full'>
+            <span className='emoji'>{emoji}</span>
+          </span>
+        </button>
       </div>
-
-      {/* 文章列表 */}
-      {sortMethod === 'time' ? (
-        // 如果 sortmethod 是 time，将所有文章作为一个分组传递
-        <NavPostItem
-          group={{ items: allPosts }} // 将所有文章作为一个分组传递
-          onHeightChange={props.onHeightChange}
-          expanded={true} // 默认展开
-          toggleItem={() => {}} // 无需切换
-          sortmethod={sortMethod} // 传递排序方法
-        />
-      ) : (
-        // 否则按分类渲染
-        categoryFolders.map((group, index) => (
-          <NavPostItem
-            key={index}
-            group={group}
+      <div className='w-full space-y-0.5 mx-auto max-w-4xl'>
+        {/* 文章列表 */}
+        {sortMethod === 'time' ? (
+          // 如果 sortmethod 是 time，将所有文章作为一个分组传递
+          <PostItemFull
+            group={{ items: allPosts }} // 将所有文章作为一个分组传递
             onHeightChange={props.onHeightChange}
-            expanded={expandedGroups.includes(index)} // 将展开状态传递给子组件
-            toggleItem={() => toggleItem(index)} // 将切换函数传递给子组件
+            expanded={true} // 默认展开
+            toggleItem={() => {}} // 无需切换
             sortmethod={sortMethod} // 传递排序方法
           />
-        ))
-      )}
+        ) : (
+          // 否则按分类渲染
+          categoryFolders.map((group, index) => (
+            <PostItemFull
+              key={index}
+              group={group}
+              onHeightChange={props.onHeightChange}
+              expanded={expandedGroups.includes(index)} // 将展开状态传递给子组件
+              toggleItem={() => toggleItem(index)} // 将切换函数传递给子组件
+              sortmethod={sortMethod} // 传递排序方法
+            />
+          ))
+        )}
+      </div>
     </div>
   )
 }

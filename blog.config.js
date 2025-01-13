@@ -19,7 +19,7 @@ const BLOG = {
   BIO: process.env.NEXT_PUBLIC_BIO || '不懂自己是谁', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || '', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'Notion, 博客', // 网站关键词 英文逗号隔开
-  BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || 'https://picx.zhimg.com/v2-85eb89cbc248c56b83fbdd2949ac54c8_xl.jpg', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
+  BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || 'https://i.postimg.cc/bww1M8Vt/image.png', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXX
 
   // RSS订阅

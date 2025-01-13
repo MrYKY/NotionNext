@@ -2,7 +2,7 @@ import Badge from '@/components/Badge'
 import Collapse from '@/components/Collapse'
 import { siteConfig } from '@/lib/config'
 import { useEffect, useState } from 'react'
-import BlogPostCard from './BlogPostCard'
+import BlogPostCardFull from './BlogPostCardFull'
 
 /**
  * 导航列表
@@ -11,7 +11,7 @@ import BlogPostCard from './BlogPostCard'
  * @returns {JSX.Element}
  * @constructor
  */
-const NavPostItem = props => {
+const PostItemFull = props => {
   const { group, expanded, toggleItem, sortmethod } = props // 接收传递的展开状态、切换函数和排序方法
   const hoverExpand = siteConfig('GITBOOK_FOLDER_HOVER_EXPAND')
   const [isTouchDevice, setIsTouchDevice] = useState(false)
@@ -79,7 +79,7 @@ const NavPostItem = props => {
             }}>
             {sortedItems.map((post, index) => (
               <div key={index}>
-                <BlogPostCard post={post} />
+                <BlogPostCardFull post={post} />
               </div>
             ))}
           </div>
@@ -95,7 +95,7 @@ const NavPostItem = props => {
         }}>
         {sortedItems.map((post, index) => (
           <div key={index}>
-            <BlogPostCard post={post} />
+            <BlogPostCardFull post={post} />
           </div>
         ))}
       </div>
@@ -103,4 +103,4 @@ const NavPostItem = props => {
   }
 }
 
-export default NavPostItem
+export default PostItemFull

@@ -94,7 +94,7 @@ const Collapse = props => {
       ref={ref}
       style={
         type === 'vertical'
-          ? { height: '0px', willChange: 'height' }
+          ? { height: '0px' }
           : { width: '0px', willChange: 'width' }
       }
       className={`${props.className || ''} overflow-hidden duration-300`}>
