@@ -7,8 +7,9 @@
   padding-top: 0 !important;
   padding-bottom: 0 !important;
   width: 100%;
-  border-radius: 0.5rem;
+  border-radius: 2rem;
   margin-bottom: 0.5rem;
+  
 }
 
 .collapse-wrapper .code-toolbar {

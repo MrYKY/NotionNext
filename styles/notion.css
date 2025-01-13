@@ -726,8 +726,7 @@ svg.notion-page-icon {
   white-space: pre-wrap;
   word-break: break-word;
   padding: 3px 2px !important;
-  margin: 1px 0 !important;
-  @apply rounded-lg inline-block
+  @apply rounded-lg inline-block my-1
 }
 
 .notion-text:first-child {
@@ -768,7 +767,7 @@ code[class*='language-'] {
   overflow: auto;
   font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier,
     monospace;
-  @apply w-full mb-0 dark:bg-black !important;
+  @apply w-full mb-0 dark:bg-black !important ;
 }
 
 .notion-column {
@@ -1967,7 +1966,7 @@ svg + .notion-page-title-text {
 
 
 .notion-quote {
-  @apply relative w-full       /* 占满父容器宽度 */
+  @apply relative w-full my-2      /* 占满父容器宽度 */
     px-10 py-2                  /* 给文字一个合适的左内边距，以免和竖线重叠 */
     box-border
     border-0                 /* 避免内边距和宽度计算问题 */
@@ -2034,7 +2033,7 @@ code.language-mermaid {
 }
 
 .code-toolbar {
-  @apply w-full shadow-md pb-0;
+  @apply w-full pb-0 rounded-2xl ;
 }
 
 .mermaid > svg {

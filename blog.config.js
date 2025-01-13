@@ -19,7 +19,7 @@ const BLOG = {
   BIO: process.env.NEXT_PUBLIC_BIO || '不懂自己是谁', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || '', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'Notion, 博客', // 网站关键词 英文逗号隔开
-  BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || 'https://file.notion.so/f/f/7e561713-8d7d-4840-a692-0466b7fe53f4/9b2dabb4-f1a1-4817-a476-b53cd8c3e3eb/%E5%A4%B4%E5%83%8F%E6%97%A0%E8%BE%B9.png?table=block&id=17880050-0da8-8049-a8cf-c6c12dff96b2&spaceId=7e561713-8d7d-4840-a692-0466b7fe53f4&expirationTimestamp=1736632800000&signature=0vG8MK_uO-0Mx7ycJ39zd7f83KDquuKNh92FMjNHTdU&downloadName=%E5%A4%B4%E5%83%8F%E6%97%A0%E8%BE%B9.png', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
+  BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || 'https://picx.zhimg.com/v2-85eb89cbc248c56b83fbdd2949ac54c8_xl.jpg', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXX
 
   // RSS订阅
