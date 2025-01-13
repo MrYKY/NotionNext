@@ -268,10 +268,18 @@ const getSEOMeta = (props, router, locale) => {
       }
     case '/blog':
       return {
-        title: `${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
+        title: `${locale.NAV.BLOG} | ${siteInfo?.title}`,
         description: `${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'blog',
+        type: 'website'
+      }
+    case '/allposts':
+      return {
+        title: `${locale.MENU.ALLPOSTS} | ${siteInfo?.title}`,
+        description: `${siteInfo?.description}`,
+        image: `${siteInfo?.pageCover}`,
+        slug: 'allposts',
         type: 'website'
       }
     default:
