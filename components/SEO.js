@@ -282,6 +282,38 @@ const getSEOMeta = (props, router, locale) => {
         slug: 'allposts',
         type: 'website'
       }
+    case '/message':
+      return {
+        title: `${locale.NAV.MESSAGE} | ${siteInfo?.title}`,
+        description: `${siteInfo?.description}`,
+        image: `${siteInfo?.pageCover}`,
+        slug: 'message',
+        type: 'website'
+      }
+    case '/cv':
+      return {
+        title: `${locale.COMMON.CV} | ${siteInfo?.title}`,
+        description: `${siteInfo?.description}`,
+        image: `${siteInfo?.pageCover}`,
+        slug: 'cv',
+        type: 'website'
+      }
+    case '/timeline':
+      return {
+        title: `${locale.COMMON.TIMELINE} | ${siteInfo?.title}`,
+        description: `${siteInfo?.description}`,
+        image: `${siteInfo?.pageCover}`,
+        slug: 'timeline',
+        type: 'website'
+      }
+    case '/workspace':
+      return {
+        title: `${locale.COMMON.WORKSPACE} | ${siteInfo?.title}`,
+        description: `${siteInfo?.description}`,
+        image: `${siteInfo?.pageCover}`,
+        slug: 'workspace',
+        type: 'website'
+      }
     default:
       return {
         title: post
