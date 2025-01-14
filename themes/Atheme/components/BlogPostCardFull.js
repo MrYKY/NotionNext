@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import LazyImage from '@/components/LazyImage'
 
-const BlogPostCardFull = ({ post, className }) => {
+const BlogPostCardFull = ({ post, className, showmethod }) => {
   const router = useRouter()
   console.log('post: ', post)
   const currentSelected =
@@ -15,14 +15,25 @@ const BlogPostCardFull = ({ post, className }) => {
     <Link href={post?.href} passHref>
       <div
         key={post.id}
-        className={`${className} relative my-1 cursor-pointer rounded-xl duration-300 merge-out border border-gray-200 overflow-hidden
-                    ${currentSelected ? 'text-white dark:bg-yellow-100 dark:text-yellow-600 bg-slate-800 ' : ' dark:hover:bg-yellow-100 dark:hover:text-yellow-600 hover:bg-zinc-200 '}`}>
+        className={`${className} relative my-1 cursor-pointer rounded-xl duration-300 merge-out border border-gray-200 overflow-hidden transition-all
+                    ${
+                      currentSelected
+                        ? 'text-white dark:bg-yellow-100 dark:text-yellow-600 bg-slate-800 '
+                        : ' dark:hover:bg-yellow-100 dark:hover:text-yellow-600 hover:bg-zinc-200 '
+                    }`}>
         {/* 文章图片 */}
-        <LazyImage
-          id='post-cover'
-          className='w-full object-cover'
-          src={post.pageCoverThumbnail}
-        />
+        <div
+          className={`transition-all duration-500 ease-in-out overflow-hidden ${
+            showmethod === 'picture'
+              ? 'opacity-100 max-h-[1000px]' // 图片显示时，opacity 为 1，max-height 足够大
+              : 'opacity-0 max-h-0' // 图片隐藏时，opacity 为 0，max-height 为 0
+          }`}>
+          <LazyImage
+            id='post-cover'
+            className='w-full object-cover'
+            src={post.pageCoverThumbnail}
+          />
+        </div>
         <div className='w-full select-none flex items-start p-2'>
           <div className='text-3xl my-auto mr-2'>
             {siteConfig('POST_TITLE_ICON') && (
@@ -31,10 +42,12 @@ const BlogPostCardFull = ({ post, className }) => {
           </div>
           <div className='flex flex-col items-start'>
             <div className='flex flex-wrap gap-2'>
-              <span className='text-sm text-gray-400 bg-zinc-200 rounded-md px-2'>{post?.category}</span>
+              <span className='text-sm text-gray-400 bg-zinc-200 rounded-md px-2'>
+                {post?.category}
+              </span>
               {post?.tags?.map((tag, index) => (
                 <span key={index} className='text-sm text-gray-400'>
-                 #{tag}
+                  #{tag}
                 </span>
               ))}
             </div>

@@ -34,6 +34,9 @@ const AllPostList = props => {
   const [sortMethod, setSortMethod] = useState('time') // 默认按时间排序
   const [emoji, setEmoji] = useState('🕒') // 默认 Emoji 是钟表
 
+  const [showMethod, setShowMethod] = useState('picture') // 默认按时间排序
+  const [emojiShow, setEmojiShow] = useState('🖼') // 默认 Emoji 是钟表
+
   // 切换排序方法
   const toggleSortMethod = () => {
     if (sortMethod === 'time') {
@@ -42,6 +45,16 @@ const AllPostList = props => {
     } else {
       setSortMethod('time')
       setEmoji('🕒') // 切换到钟表表情
+    }
+  }
+
+  const toggleShowMethod = () => {
+    if (showMethod === 'picture') {
+      setShowMethod('text')
+      setEmojiShow('📄') // 切换到存档表情
+    } else {
+      setShowMethod('picture')
+      setEmojiShow('🖼') // 切换到钟表表情
     }
   }
 
@@ -56,7 +69,7 @@ const AllPostList = props => {
       setExpandedGroups([defaultOpenIndex])
     }, 500)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router, filteredNavPages])
+  }, [router, filteredNavPages,showMethod])
 
   // 折叠项切换，当折叠或展开数组时会调用
   const toggleItem = index => {
@@ -115,16 +128,28 @@ const AllPostList = props => {
       {/* 右上角按钮 */}
       <div className='flex items-center justify-between border-b pb-2 mb-2'>
         <div className='px-1 font-bold text-xl '>所有文章</div>
-        <button
-          onClick={toggleSortMethod}
-          className='p-2 text-xl hover:bg-zinc-200 dark:hover:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-700 transition-all duration-300 '
-          aria-label='切换排序方式'
-          style={{ width: '2em', height: '2em' }} // 设置为正方形
-        >
-          <span className='emoji-container flex items-center justify-center w-full h-full'>
-            <span className='emoji'>{emoji}</span>
-          </span>
-        </button>
+        <div className='gap-2'>
+          <button
+            onClick={toggleShowMethod}
+            className='p-2 mr-2 text-xl hover:bg-zinc-200 dark:hover:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-700 transition-all duration-300 '
+            aria-label='切换排序方式'
+            style={{ width: '2em', height: '2em' }} // 设置为正方形
+          >
+            <span className='emoji-container flex items-center justify-center w-full h-full'>
+              <span className='emoji'>{emojiShow}</span>
+            </span>
+          </button>
+          <button
+            onClick={toggleSortMethod}
+            className='p-2 text-xl hover:bg-zinc-200 dark:hover:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-700 transition-all duration-300 '
+            aria-label='切换排序方式'
+            style={{ width: '2em', height: '2em' }} // 设置为正方形
+          >
+            <span className='emoji-container flex items-center justify-center w-full h-full'>
+              <span className='emoji'>{emoji}</span>
+            </span>
+          </button>
+        </div>
       </div>
       <div className='w-full space-y-0.5 mx-auto max-w-4xl'>
         {/* 文章列表 */}
@@ -136,6 +161,7 @@ const AllPostList = props => {
             expanded={true} // 默认展开
             toggleItem={() => {}} // 无需切换
             sortmethod={sortMethod} // 传递排序方法
+            showmethod={showMethod}
           />
         ) : (
           // 否则按分类渲染
@@ -147,6 +173,7 @@ const AllPostList = props => {
               expanded={expandedGroups.includes(index)} // 将展开状态传递给子组件
               toggleItem={() => toggleItem(index)} // 将切换函数传递给子组件
               sortmethod={sortMethod} // 传递排序方法
+              showmethod={showMethod}
             />
           ))
         )}

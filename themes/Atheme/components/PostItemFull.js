@@ -13,7 +13,7 @@ import Masonry from 'react-masonry-component'
  * @constructor
  */
 const PostItemFull = props => {
-  const { group, expanded, toggleItem, sortmethod } = props // 接收传递的展开状态、切换函数和排序方法
+  const { group, expanded, toggleItem, sortmethod, showmethod } = props // 接收传递的展开状态、切换函数和排序方法
   const hoverExpand = siteConfig('GITBOOK_FOLDER_HOVER_EXPAND')
   const [isTouchDevice, setIsTouchDevice] = useState(false)
 
@@ -113,7 +113,7 @@ const PostItemFull = props => {
                   className='grid-item'
                   style={{ width: `calc(${100 / columnCount}% - 16px)` }} // 动态设置宽度
                 >
-                  <BlogPostCardFull post={post} />
+                  <BlogPostCardFull post={post} showmethod={showmethod}/>
                 </div>
               ))}
             </Masonry>
@@ -131,7 +131,7 @@ const PostItemFull = props => {
               className='grid-item'
               style={{ width: `calc(${100 / columnCount}% - 16px)` }} // 动态设置宽度
             >
-              <BlogPostCardFull post={post} />
+              <BlogPostCardFull post={post} showmethod={showmethod}/>
             </div>
           ))}
         </Masonry>

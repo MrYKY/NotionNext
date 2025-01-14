@@ -29,6 +29,7 @@ const Collapse = props => {
     }
   })
 
+
   /**
    * 折叠
    * @param {*} element
@@ -99,7 +100,7 @@ const Collapse = props => {
           ? { height: '0px' }
           : { width: '0px', willChange: 'width' }
       }
-      className={`${props.className || ''} overflow-hidden duration-300`}>
+      className={`${props.className || ''} overflow-hidden duration-300 transition-all`}>
       {props.children}
     </div>
   )
