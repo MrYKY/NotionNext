@@ -18,8 +18,12 @@ const Collapse = props => {
        */
       updateCollapseHeight: ({ height, increase }) => {
         if (props.isOpen) {
-          ref.current.style.height = ref.current.scrollHeight
-          ref.current.style.height = 'auto'
+          requestAnimationFrame(() => {
+            ref.current.style.height = `${height}px`
+            requestAnimationFrame(() => {
+              ref.current.style.height = 'auto'
+            })
+          })
         }
       }
     }
@@ -71,8 +75,6 @@ const Collapse = props => {
           element.style.height = 'auto'
         }, 400)
     }
-
-    clearTimeout(clearTime)
   }
 
   useEffect(() => {

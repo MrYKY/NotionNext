@@ -1,8 +1,9 @@
 import Badge from '@/components/Badge'
 import Collapse from '@/components/Collapse'
 import { siteConfig } from '@/lib/config'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 import BlogPostCardFull from './BlogPostCardFull'
+import Masonry from 'react-masonry-component'
 
 /**
  * 导航列表
@@ -15,6 +16,38 @@ const PostItemFull = props => {
   const { group, expanded, toggleItem, sortmethod } = props // 接收传递的展开状态、切换函数和排序方法
   const hoverExpand = siteConfig('GITBOOK_FOLDER_HOVER_EXPAND')
   const [isTouchDevice, setIsTouchDevice] = useState(false)
+
+  const gridRef = useRef(null) // 父组件的引用
+  const [columnCount, setColumnCount] = useState(3) // 默认栏数
+
+  // 监听父组件宽度变化
+  useEffect(() => {
+    const updateColumnCount = () => {
+      if (gridRef.current) {
+        const width = gridRef.current.clientWidth
+        if (width >= 768) setColumnCount(3)
+        else if (width >= 512) setColumnCount(2)
+        else setColumnCount(1)
+      }
+    }
+
+    const resizeObserver = new ResizeObserver(updateColumnCount)
+    if (gridRef.current) {
+      resizeObserver.observe(gridRef.current) // 开始监听
+    }
+
+    return () => {
+      if (gridRef.current) {
+        resizeObserver.unobserve(gridRef.current) // 停止监听
+      }
+    }
+  }, [])
+
+  const masonryOptions = {
+    transitionDuration: 300,
+    horizontalOrder: true, // 优先横向排布
+    gutter: 8
+  }
 
   // 检测是否为触摸设备
   useEffect(() => {
@@ -72,32 +105,36 @@ const PostItemFull = props => {
           </div>
         </div>
         <Collapse isOpen={expanded} onHeightChange={props.onHeightChange}>
-          <div
-            className='grid gap-x-4 w-full'
-            style={{
-              gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(250px, 33.33%, 400px), 1fr))',
-            }}>
-            {sortedItems.map((post, index) => (
-              <div key={index}>
-                <BlogPostCardFull post={post} />
-              </div>
-            ))}
+          <div ref={gridRef} className='w-full'>
+            <Masonry className='grid gap-4' options={masonryOptions}>
+              {sortedItems.map((post, index) => (
+                <div
+                  key={index}
+                  className='grid-item'
+                  style={{ width: `calc(${100 / columnCount}% - 16px)` }} // 动态设置宽度
+                >
+                  <BlogPostCardFull post={post} />
+                </div>
+              ))}
+            </Masonry>
           </div>
         </Collapse>
       </>
     )
   } else {
     return (
-      <div
-        className='grid gap-x-4 w-full'
-        style={{
-          gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(250px, 33.33%, 400px), 1fr))',
-        }}>
-        {sortedItems.map((post, index) => (
-          <div key={index}>
-            <BlogPostCardFull post={post} />
-          </div>
-        ))}
+      <div ref={gridRef} className='w-full'>
+        <Masonry className='grid gap-4' options={masonryOptions}>
+          {sortedItems.map((post, index) => (
+            <div
+              key={index}
+              className='grid-item'
+              style={{ width: `calc(${100 / columnCount}% - 16px)` }} // 动态设置宽度
+            >
+              <BlogPostCardFull post={post} />
+            </div>
+          ))}
+        </Masonry>
       </div>
     )
   }
