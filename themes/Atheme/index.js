@@ -180,7 +180,9 @@ const LayoutIndex = props => {
     <div className='w-full h-full'>
       <main
         id='wrapper'
-        className={`${siteConfig('LAYOUT_SIDEBAR_REVERSE') ? 'flex-row-reverse' : ''} relative flex justify-between w-full h-full mx-auto`}>
+        className={`${
+          siteConfig('LAYOUT_SIDEBAR_REVERSE') ? 'flex-row-reverse' : ''
+        } relative flex justify-between w-full h-full mx-auto`}>
         {/* 顶部导航栏 */}
         <Header {...props} />
         {/* 左侧推拉抽屉 */}
@@ -207,7 +209,9 @@ const LayoutIndex = props => {
           className='flex flex-col justify-start items-center w-full h-full overflow-y-auto scroll-hidden relative z-10'>
           <div
             id='container-inner'
-            className={` ${fullWidth ? 'px-5' : ''} w-full mx-auto flex item-center justify-center`}>
+            className={` ${
+              fullWidth ? 'px-5' : ''
+            } w-full mx-auto flex item-center justify-center`}>
             {slotTop}
             {basePath?.indexOf('blog') > 0 ? <_LayoutBlogHome /> : children}
           </div>
@@ -254,26 +258,87 @@ const LayoutIndex = props => {
 const LayoutMainPage = props => {
   // 返回主页内容
   return (
-    <div className='w-full h-96 py-80 flex flex-col justify-center items-center'>
-      <h1 className='text-3xl text-'>Main Page Site</h1>
-      <div className='text-2xl text-gray-300'>
-        <Link href='/blog'>进入博客</Link>
+    <div className="w-full h-full flex flex-col justify-center items-center bg-white text-black">
+      {/* 大标题 */}
+      <div className="w-full max-w-4xl px-4">
+        <h1 className="text-6xl font-bold mb-4">
+          你好🫡，我是
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 animate-gradient">
+            Kyan
+          </span>
+        </h1>
+
+        {/* 副标题 */}
+        <p className="text-2xl text-gray-700 mb-8">欢迎来到我的互联网自留地。</p>
+
+        {/* 链接 */}
+        <div className="flex space-x-4">
+          <Link
+            href="/blog"
+            className="text-xl text-blue-600 hover:text-blue-500 transition-colors"
+          >
+            进入博客主页
+          </Link>
+          <Link
+            href="/resume"
+            className="text-xl text-green-600 hover:text-green-500 transition-colors"
+          >
+            进入简历
+          </Link>
+        </div>
       </div>
     </div>
   )
 }
 
-const _LayoutBlogHome = props => {
-  // 返回主页内容
+const _LayoutBlogHome = () => {
+  // 置顶文章列表
+  const topPosts = [
+    { title: '探索 React 18 的新特性', link: '/blog/react-18' },
+    { title: '如何设计一个高效的算法', link: '/blog/algorithm-design' },
+    { title: '我的前端开发工具箱', link: '/blog/frontend-tools' },
+  ];
+
   return (
-    <div className='w-full h-96 py-80 flex flex-col justify-center items-center'>
-      <h1 className='text-3xl text-'>博客主页</h1>
-      <div className='text-2xl text-gray-300'>
-        <Link href='/blog'>原地TP</Link>
+    <div className='w-full h-full flex flex-col justify-center items-center bg-white text-black px-4 pt-96'>
+      {/* 自我介绍 */}
+      <div className='text-center max-w-2xl'>
+        <h1 className='text-6xl font-bold mb-4'>
+          你好，我是{' '}
+          <span className='text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 animate-gradient'>
+            Kyan
+          </span>{' '}
+          🫡
+        </h1>
+        <p className='text-2xl text-gray-700 mb-8'>
+          欢迎来到我的互联网自留地 🌱，这里记录了我的技术探索、生活感悟和创作灵感。
+        </p>
+      </div>
+
+      {/* 置顶文章列表 */}
+      <div className='w-full max-w-2xl'>
+        <h2 className='text-4xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-green-500'>
+          置顶文章 📌
+        </h2>
+        <ul className='space-y-4'>
+          {topPosts.map((post, index) => (
+            <li key={index} className='text-2xl text-gray-700 hover:text-gray-900 transition-colors'>
+              <Link href={post.link} className='flex items-center'>
+                <span className='mr-2'>👉</span>
+                {post.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* 返回主页链接 */}
+      <div className='mt-12 text-xl text-blue-500 hover:text-blue-400 transition-colors'>
+        <Link href='/'>🏠 返回主页</Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
 /**
  * 文章列表 无
@@ -282,9 +347,7 @@ const _LayoutBlogHome = props => {
  * @returns
  */
 const LayoutPostList = props => {
-  const {
-    allNavPages
-  } = props
+  const { allNavPages } = props
   return (
     <LayoutIndex {...props}>
       <AllPostList filteredNavPages={allNavPages} {...props} />
