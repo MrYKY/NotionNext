@@ -287,6 +287,10 @@ img {
   overflow: hidden;
 }
 
+
+/* ===============================================自定义部分======================================================*/
+
+
 /* 自定义变量来配置阴影宽度和软化程度 */
 :root {
   --shadow-width: 2px; /* 阴影扩展宽度 */
@@ -351,4 +355,25 @@ img {
   z-index: -1; /* 将模糊层放到元素背后 */
   opacity: 0.8; /* 调整模糊层的透明度 */
   border-radius: 50%; /* 如果需要圆形辐射效果 */
+}
+
+/* Masonry 样式 */
+.my-masonry-grid {
+  display: flex;
+  margin-left: -8px; /* gutter size offset */
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 8px; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* 每个网格项的下边距 */
+.my-masonry-grid_column > .grid-item {
+  margin-bottom: 8px;
+}
+
+/* 可选：过渡动画 */
+.grid-item {
+  transition: all 0.3s ease;
 }

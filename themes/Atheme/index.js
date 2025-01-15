@@ -1,8 +1,6 @@
 'use client'
 
 import Comment from '@/components/Comment'
-import { AdSlot } from '@/components/GoogleAdsense'
-import Live2D from '@/components/Live2D'
 import LoadingCover from '@/components/LoadingCover'
 import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
@@ -14,33 +12,29 @@ import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
 import { getShortId } from '@/lib/utils/pageId'
 import { SignIn, SignUp } from '@clerk/nextjs'
-import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import Announcement from './components/Announcement'
+import { createContext, useContext, useEffect, useRef, useState, useCallback } from 'react'
 import ArticleAround from './components/ArticleAround'
 import ArticleInfo from './components/ArticleInfo'
 import { ArticleLock } from './components/ArticleLock'
 import BlogArchiveItem from './components/BlogArchiveItem'
 import BottomMenuBar from './components/BottomMenuBar'
 import Catalog from './components/Catalog'
-import CatalogDrawerWrapper from './components/CatalogDrawerWrapper'
 import CategoryItem from './components/CategoryItem'
 import Footer from './components/Footer'
 import Header from './components/Header'
-import InfoCard from './components/InfoCard'
 import JumpToTopButton from './components/JumpToTopButton'
 import NavPostList from './components/NavPostList'
 import PageNavDrawer from './components/PageNavDrawer'
-import RevolverMaps from './components/RevolverMaps'
 import TagItemMini from './components/TagItemMini'
 import OuterBorder from './components/OuterBorder'
 import CONFIG from './config'
 import { Style } from './style'
 import LazyImage from '@/components/LazyImage'
 import AllPostList from './components/AllPostList'
+import { motion, AnimatePresence } from 'framer-motion';
 
 // 主题全局变量
 const ThemeGlobalGitbook = createContext()
@@ -256,39 +250,114 @@ const LayoutIndex = props => {
 }
 
 const LayoutMainPage = props => {
-  // 返回主页内容
-  return (
-    <div className="w-full h-full flex flex-col justify-center items-center bg-white text-black">
-      {/* 大标题 */}
-      <div className="w-full max-w-4xl px-4">
-        <h1 className="text-6xl font-bold mb-4">
-          你好🫡，我是
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 animate-gradient">
-            Kyan
-          </span>
-        </h1>
 
-        {/* 副标题 */}
-        <p className="text-2xl text-gray-700 mb-8">欢迎来到我的互联网自留地。</p>
-
-        {/* 链接 */}
-        <div className="flex space-x-4">
-          <Link
-            href="/blog"
-            className="text-xl text-blue-600 hover:text-blue-500 transition-colors"
-          >
-            进入博客主页
-          </Link>
-          <Link
-            href="/resume"
-            className="text-xl text-green-600 hover:text-green-500 transition-colors"
-          >
-            进入简历
-          </Link>
+  const panels = [
+    {
+      id: 1,
+      content: (
+        <div className="w-full h-full flex flex-col justify-center items-center bg-white text-black">
+        {/* 大标题 */}
+        <div className="w-full max-w-4xl px-4">
+          <h1 className="text-6xl font-bold mb-4">
+            你好🫡，我是
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 animate-gradient">
+              Kyan
+            </span>
+          </h1>
+  
+          {/* 副标题 */}
+          <p className="text-2xl text-gray-700 mb-8">欢迎来到我的互联网自留地。</p>
+  
+          {/* 链接 */}
+          <div className="flex space-x-4">
+            <Link
+              href="/blog"
+              className="text-xl text-blue-600 hover:text-blue-500 transition-colors"
+            >
+              进入博客主页
+            </Link>
+            <Link
+              href="/resume"
+              className="text-xl text-green-600 hover:text-green-500 transition-colors"
+            >
+              进入简历
+            </Link>
+          </div>
         </div>
       </div>
+      ),
+    },
+    {
+      id: 2,
+      content: (
+        <div className="w-full h-full flex flex-col justify-center items-center bg-white text-black">
+          页面 2
+        </div>
+      ),
+    },
+    {
+      id: 3,
+      content: (
+        <div className="w-full h-full flex flex-col justify-center items-center bg-white text-black">
+          页面 3
+        </div>
+      ),
+    },
+  ];
+  const [current, setCurrent] = useState(0);
+  const [scrolling, setScrolling] = useState(false);
+
+  const handleScroll = useCallback(
+    (e) => {
+      if (scrolling) return;
+
+      if (e.deltaY > 0 && current < panels.length - 1) {
+        setCurrent((prev) => prev + 1);
+        setScrolling(true);
+      } else if (e.deltaY < 0 && current > 0) {
+        setCurrent((prev) => prev - 1);
+        setScrolling(true);
+      }
+    },
+    [current, scrolling, panels.length]
+  );
+
+  useEffect(() => {
+    const onWheel = (e) => handleScroll(e);
+
+    window.addEventListener('wheel', onWheel);
+
+    return () => {
+      window.removeEventListener('wheel', onWheel);
+    };
+  }, [handleScroll]);
+
+  // 允许滚动完成后再次响应滚动
+  useEffect(() => {
+    if (scrolling) {
+      const timer = setTimeout(() => {
+        setScrolling(false);
+      }, 700); // 动画持续时间（毫秒）稍大于动画时间
+      return () => clearTimeout(timer);
+    }
+  }, [scrolling]);
+
+  return (
+    <div className="w-full h-full overflow-hidden relative">
+      <AnimatePresence exitBeforeEnter>
+        <motion.div
+          key={current}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.7 }}
+          className="absolute top-0 left-0 w-full h-full"
+        >
+          {panels[current].content}
+        </motion.div>
+      </AnimatePresence>
     </div>
-  )
+  );
 }
 
 const _LayoutBlogHome = () => {

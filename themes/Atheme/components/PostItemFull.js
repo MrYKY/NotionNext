@@ -1,9 +1,10 @@
 import Badge from '@/components/Badge'
 import Collapse from '@/components/Collapse'
 import { siteConfig } from '@/lib/config'
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react'
 import BlogPostCardFull from './BlogPostCardFull'
-import Masonry from 'react-masonry-component'
+import Masonry from 'react-masonry-css'
+import { motion, AnimatePresence } from 'framer-motion'
 
 /**
  * 导航列表
@@ -31,6 +32,9 @@ const PostItemFull = props => {
       }
     }
 
+    // 初始化列数
+    updateColumnCount()
+
     const resizeObserver = new ResizeObserver(updateColumnCount)
     if (gridRef.current) {
       resizeObserver.observe(gridRef.current) // 开始监听
@@ -43,10 +47,12 @@ const PostItemFull = props => {
     }
   }, [])
 
-  const masonryOptions = {
-    transitionDuration: 300,
-    horizontalOrder: true, // 优先横向排布
-    gutter: 8
+  // 定义断点和对应的列数
+  const breakpointColumnsObj = {
+    default: columnCount,
+    1100: Math.min(columnCount, 3),
+    700: Math.min(columnCount, 2),
+    500: 1
   }
 
   // 检测是否为触摸设备
@@ -106,15 +112,20 @@ const PostItemFull = props => {
         </div>
         <Collapse isOpen={expanded} onHeightChange={props.onHeightChange}>
           <div ref={gridRef} className='w-full'>
-            <Masonry className='grid gap-4' options={masonryOptions}>
+            <Masonry
+              breakpointCols={breakpointColumnsObj}
+              className='my-masonry-grid'
+              columnClassName='my-masonry-grid_column'>
               {sortedItems.map((post, index) => (
-                <div
+                <motion.div
                   key={index}
                   className='grid-item'
-                  style={{ width: `calc(${100 / columnCount}% - 16px)` }} // 动态设置宽度
-                >
-                  <BlogPostCardFull post={post} showmethod={showmethod}/>
-                </div>
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -50 }}
+                  transition={{ duration: 0.5 }}>
+                  <BlogPostCardFull post={post} showmethod={showmethod} />
+                </motion.div>
               ))}
             </Masonry>
           </div>
@@ -124,15 +135,20 @@ const PostItemFull = props => {
   } else {
     return (
       <div ref={gridRef} className='w-full'>
-        <Masonry className='grid gap-4' options={masonryOptions}>
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className='my-masonry-grid'
+          columnClassName='my-masonry-grid_column'>
           {sortedItems.map((post, index) => (
-            <div
+            <motion.div
               key={index}
               className='grid-item'
-              style={{ width: `calc(${100 / columnCount}% - 16px)` }} // 动态设置宽度
-            >
-              <BlogPostCardFull post={post} showmethod={showmethod}/>
-            </div>
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              transition={{ duration: 0.5 }}>
+              <BlogPostCardFull post={post} showmethod={showmethod} />
+            </motion.div>
           ))}
         </Masonry>
       </div>
