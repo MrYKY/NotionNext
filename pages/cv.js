@@ -1,28 +1,23 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
-import { generateRobotsTxt } from '@/lib/robots.txt'
-import { generateRss } from '@/lib/rss'
-import { generateSitemapXml } from '@/lib/sitemap.xml'
+import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
- * 首页布局
+ * 404
  * @param {*} props
  * @returns
  */
-const BlogPage = props => {
-  return null
+const NoFound = props => {
+  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
+  return <DynamicLayout theme={theme} layoutName='Layout404' {...props} />
 }
 
-/**
- * SSG 获取数据
- * @returns
- */
 export async function getStaticProps(req) {
+  const { locale } = req
 
-  return 
-   null
+  const props = (await getGlobalData({ from: '404', locale })) || {}
+  return { props }
 }
 
-export default BlogPage
+export default NoFound
