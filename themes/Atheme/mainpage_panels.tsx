@@ -72,7 +72,7 @@ const panels = [
                   }}
                   style={{
                     display: 'inline-block',
-                    transformOrigin: '100% 100%'
+                    transformOrigin: '80% 80%'
                   }} // 确保 span 可以旋转
                 >
                   👋 {/* Emoji */}
