@@ -305,7 +305,7 @@ const LayoutMainPage = props => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0 }}
           className='w-full h-full'>
           {panels[current].content}
         </motion.div>
