@@ -42,7 +42,7 @@ import { Style } from './style'
 import LazyImage from '@/components/LazyImage'
 import AllPostList from './components/AllPostList'
 import { motion, AnimatePresence } from 'framer-motion'
-import panels from './mainpage_panels'
+import MainPagePanels from './mainpage_panels'
 
 // 主题全局变量
 const ThemeGlobalGitbook = createContext()
@@ -259,57 +259,9 @@ const LayoutIndex = props => {
 
 const LayoutMainPage = props => {
 
-  const [current, setCurrent] = useState(0)
-  const [scrolling, setScrolling] = useState(false)
-
-  const handleScroll = useCallback(
-    e => {
-      if (scrolling) return
-
-      if (e.deltaY > 0 && current < panels.length - 1) {
-        setCurrent(prev => prev + 1)
-        setScrolling(true)
-      } else if (e.deltaY < 0 && current > 0) {
-        setCurrent(prev => prev - 1)
-        setScrolling(true)
-      }
-    },
-    [current, scrolling, panels.length]
-  )
-
-  useEffect(() => {
-    const onWheel = e => handleScroll(e)
-
-    window.addEventListener('wheel', onWheel)
-
-    return () => {
-      window.removeEventListener('wheel', onWheel)
-    }
-  }, [handleScroll])
-
-  // 允许滚动完成后再次响应滚动
-  useEffect(() => {
-    if (scrolling) {
-      const timer = setTimeout(() => {
-        setScrolling(false)
-      }, 700) // 动画持续时间（毫秒）稍大于动画时间
-      return () => clearTimeout(timer)
-    }
-  }, [scrolling])
-
   return (
     <div className='w-full h-full overflow-hidden'>
-      <AnimatePresence exitBeforeEnter>
-        <motion.div
-          key={current}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0 }}
-          className='w-full h-full'>
-          {panels[current].content}
-        </motion.div>
-      </AnimatePresence>
+      <MainPagePanels />
     </div>
   )
 }
