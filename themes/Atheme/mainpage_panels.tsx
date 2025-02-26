@@ -31,13 +31,14 @@ const MainPagePanels = () => {
   // 鼠标滚轮事件处理
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      if (isSwitching) return
+      // if (isSwitching) return
 
-      setIsSwitching(true)
-      const direction = e.deltaY > 0 ? 1 : -1
-      setActivePanel(prev => Math.max(0, Math.min(1, prev + direction)))
+      // setIsSwitching(true)
+      // const direction = e.deltaY > 0 ? 1 : -1
+      // setActivePanel(prev => Math.max(0, Math.min(1, prev + direction)))
 
-      setTimeout(() => setIsSwitching(false), 1000)
+      // setTimeout(() => setIsSwitching(false), 1000)
+      setActivePanel(0)
     }
 
     window.addEventListener('wheel', handleWheel)
@@ -247,10 +248,10 @@ const MainPagePanels = () => {
                     updateInterval={100}
                     disableDrawing={false}
                     colors={{
-                      background: '#E9C46A',
-                      textDim: '#2A9D8F',
-                      drawLine: '#E76F51',
-                      textBright: '#E9C46A'
+                      background: 'rgba(233, 196, 106, 1)', // 加入透明度
+                      textDim: 'rgba(42, 157, 143, 1)', // 加入透明度
+                      drawLine: 'rgba(231, 111, 81, 1)', // 加入透明度
+                      textBright: 'rgba(233, 196, 106, 1)' // 加入透明度
                     }}
                   />
                 </motion.div>
@@ -367,50 +368,20 @@ const MainPagePanels = () => {
       </AnimatePresence>
 
       {/* 面板2 */}
-      <AnimatePresence>
+      {/* <AnimatePresence mode='wait'>
         {activePanel === 1 && (
           <motion.div
-            key='panel-1'
-            className='panel'
+            className='flex flex-col items-center justify-center w-full h-full bg-[#f6eedc] relative'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}>
+            transition={{ duration: 2, delay: 0 }}>
             <AnimatePresence propagate>
-              {/* 元素1 */}
-              <AnimatePresence>
-                <motion.div
-                  className='element'
-                  initial={{ opacity: 0, y: -100 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, x: 100 }}
-                  transition={{ delay: 0.2, duration: 0.4 }}
-                />
-              </AnimatePresence>
-
-              {/* 元素2 */}
-              <AnimatePresence>
-                <motion.div
-                  className='element'
-                  initial={{ opacity: 0, scale: 1.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, rotate: -180 }}
-                  transition={{ delay: 0.4, duration: 0.4 }}
-                />
-              </AnimatePresence>
-
-              {/* 元素3 */}
-              <AnimatePresence>
-                <motion.div
-                  className='element'
-                  initial={{ opacity: 0, x: 100 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ clipPath: 'inset(0 0 100% 0)' }}
-                  transition={{ delay: 0.6, duration: 0.4 }}
-                />
-              </AnimatePresence>
+              <div className='flex items-center justify-center w-[1280px] h-[720px] bg-[#938a75]'></div>
             </AnimatePresence>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </div>
   )
 }

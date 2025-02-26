@@ -41,6 +41,9 @@ import CONFIG from './config'
 import { Style } from './style'
 import LazyImage from '@/components/LazyImage'
 import AllPostList from './components/AllPostList'
+import ASCIIText from '@/components/animation/ASCIIText'
+import Noise from '@/components/animation/Noise'
+import DesktopOnlyOverlay from '@/components/DesktopOnlyOverlay'
 import { motion, AnimatePresence } from 'framer-motion'
 import MainPagePanels from './mainpage_panels'
 
@@ -136,8 +139,8 @@ const LayoutBase = props => {
         changePageNavVisible
       }}>
       <Style />
-
       <OuterBorder>
+        <DesktopOnlyOverlay />
         {GITBOOK_LOADING_COVER && <LoadingCover />}
         {slotTop}
         {children}
@@ -220,7 +223,7 @@ const LayoutIndex = props => {
 
           {/* 底部 */}
           <div className='md:hidden'>
-            <Footer {...props} />
+            {/* <Footer {...props} /> */}
           </div>
         </div>
 
@@ -246,19 +249,18 @@ const LayoutIndex = props => {
       </main>
 
       {/* 回顶按钮 */}
-      <JumpToTopButton />
+      {/* <JumpToTopButton /> */}
 
       {/* 移动端导航抽屉 */}
-      <PageNavDrawer {...props} filteredNavPages={filteredNavPages} />
+      {/* <PageNavDrawer {...props} filteredNavPages={filteredNavPages} /> */}
 
       {/* 移动端底部导航栏 */}
-      <BottomMenuBar {...props} />
+      {/* <BottomMenuBar {...props} /> */}
     </div>
   )
 }
 
 const LayoutMainPage = props => {
-
   return (
     <div className='w-full h-full overflow-hidden'>
       <MainPagePanels />
@@ -485,8 +487,19 @@ const LayoutArchive = props => {
 const Layout404 = props => {
   return (
     <LayoutIndex {...props}>
-      <div className='w-full h-96 py-80 flex justify-center items-center'>
-        404 Not found.
+      <div className='w-full h-full flex flex-col'>
+      <div className='absolute h-full w-full z-50 pointer-events-none'>
+        <Noise
+          patternSize={500}
+          patternScaleX={1.5}
+          patternScaleY={1.5}
+          patternRefreshInterval={2}
+          patternAlpha={20}
+        />
+      </div>
+        <div className=''>
+        <ASCIIText text='404' enableWaves={false} asciiFontSize={20} planeBaseHeight={6} />
+        </div>
       </div>
     </LayoutIndex>
   )
