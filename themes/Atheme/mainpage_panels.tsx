@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/router';
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useAnimation } from 'framer-motion'
 import { styled } from 'styled-components'
@@ -20,6 +21,7 @@ import { LightBoard } from './components/LightBoard'
 import FractalDotGrid from './components/FractalGrid'
 import LazyImage from '@/components/LazyImage'
 import Noise from '@/components/animation/Noise'
+import Dock from '@/components/animation/Dock'
 
 // 动画通用配置变量
 const global_duration = 0.5
@@ -27,6 +29,7 @@ const global_duration = 0.5
 const MainPagePanels = () => {
   const [activePanel, setActivePanel] = useState(0)
   const [isSwitching, setIsSwitching] = useState(false)
+  const router = useRouter()
 
   // 鼠标滚轮事件处理
   useEffect(() => {
@@ -45,6 +48,24 @@ const MainPagePanels = () => {
     return () => window.removeEventListener('wheel', handleWheel)
   }, [isSwitching])
 
+  const items = [
+    {
+      icon: '🏠',
+      label: 'Blog',
+      onClick: () => router.push('/blog')
+    },
+    {
+      icon: '📄',
+      label: 'CV',
+      onClick: () => router.push('/cv')
+    },
+    {
+      icon: 'ℹ️',
+      label: 'About',
+      onClick: () => router.push('/about')
+    }
+  ]
+
   return (
     <div className='w-full h-full'>
       <div className='absolute h-full w-full z-50 pointer-events-none'>
@@ -60,7 +81,7 @@ const MainPagePanels = () => {
       <AnimatePresence mode='wait'>
         {activePanel === 0 && (
           <motion.div
-            className='flex flex-col items-start justify-start w-full h-full bg-[#f6eedc] relative'
+            className='flex flex-col items-start justify-between w-full h-full bg-[#f6eedc] relative'
             exit={{ opacity: 0 }}
             transition={{ duration: 2, delay: 0 }}>
             <AnimatePresence propagate>
@@ -81,7 +102,7 @@ const MainPagePanels = () => {
                 />
               </div>
               // 大标题
-              <div className=' ml-[10%] mt-[5%] mb-[2%] z-20'>
+              <div className=' ml-[10%] mt-[5%] mb-[2%] z-30'>
                 <h1 className='text-8xl font-bold pb-2 flex items-center justify-center'>
                   <motion.div
                     initial={{ y: '5vh', opacity: 0 }}
@@ -222,9 +243,9 @@ const MainPagePanels = () => {
                 </motion.div>
               </div>
               // 光点版
-              <div className='w-full flex flex-col z-20 '>
+              <div className='w-full flex flex-col z-20 absolute top-[28%]'>
                 <motion.div
-                  initial={{ x: '-100vw', opacity: 0 }}
+                  initial={{ x: '-50vw', opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   exit={{
                     opacity: 0,
@@ -245,7 +266,7 @@ const MainPagePanels = () => {
                     gap={6}
                     text='Think less, do more'
                     font='default'
-                    updateInterval={100}
+                    updateInterval={300}
                     disableDrawing={false}
                     colors={{
                       background: 'rgba(233, 196, 106, 1)', // 加入透明度
@@ -256,7 +277,7 @@ const MainPagePanels = () => {
                   />
                 </motion.div>
                 <motion.div
-                  initial={{ x: '100vw', opacity: 0 }}
+                  initial={{ x: '50vw', opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   exit={{
                     opacity: 0,
@@ -277,7 +298,7 @@ const MainPagePanels = () => {
                     gap={6}
                     text='Be brave'
                     font='default'
-                    updateInterval={200}
+                    updateInterval={400}
                     disableDrawing={false}
                     colors={{
                       background: '#FEFAE0',
@@ -288,7 +309,7 @@ const MainPagePanels = () => {
                   />
                 </motion.div>
                 <motion.div
-                  initial={{ x: '-100vw', opacity: 0 }}
+                  initial={{ x: '-50vw', opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   exit={{
                     opacity: 0,
@@ -309,7 +330,7 @@ const MainPagePanels = () => {
                     gap={6}
                     text='jie fang si xiang  shi shi qiu shi'
                     font='default'
-                    updateInterval={100}
+                    updateInterval={200}
                     disableDrawing={false}
                     colors={{
                       background: '#FFB703',
@@ -321,7 +342,7 @@ const MainPagePanels = () => {
                 </motion.div>
               </div>
               // 底部链接
-              <div className='flex flex-col text-xl ml-[10%] mt-[2%] z-20'>
+              <div className='z-30 absolute left-1/2 bottom-2'>
                 <motion.div
                   initial={{ y: '5vh', opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -338,28 +359,13 @@ const MainPagePanels = () => {
                     ease: 'easeOut',
                     delay: 5.5
                   }}>
-                  <div>
-                    这里是我的
-                    <Link
-                      href='/blog'
-                      className='group inline-flex items-center text-blue-600 hover:text-blue-500 transition-colors relative px-2 py-1 rounded-lg hover:bg-blue-50'>
-                      Blog
-                      <span className='ml-1 transition-transform transform group-hover:translate-x-1 group-hover:-translate-y-1'>
-                        ↗
-                      </span>
-                    </Link>
-                  </div>
-                  <div>
-                    这里是我的
-                    <Link
-                      href='/cv'
-                      className='group inline-flex items-center text-green-600 hover:text-green-500 transition-colors relative px-2 py-1 rounded-lg hover:bg-green-50'>
-                      简历
-                      <span className='ml-1 transition-transform transform group-hover:translate-x-1 group-hover:-translate-y-1'>
-                        ↗
-                      </span>
-                    </Link>
-                  </div>
+                  <Dock
+                    items={items}
+                    className = 'text-3xl'
+                    panelHeight={40}
+                    baseItemSize={60}
+                    magnification={70}
+                  />
                 </motion.div>
               </div>
             </AnimatePresence>

@@ -40,7 +40,7 @@ function DesktopOnlyOverlay() {
         <div className='absolute inset-0 flex flex-col h-full w-full items-center justify-center bg-gray-900 text-black z-50 gap-y-10 overflow-hidden'>
           <div className ='bg-yellow-300 py-5 -rotate-12'>
             <ScrollVelocity
-              texts={['自适应布局施工中 ⚠️ Adaptive Layout Under Construction ⚠️']}
+              texts={['响应式布局施工中 ⚠️ Dynamic Layout Under Construction ⚠️']}
               velocity={200}
               className='text-7xl'
             />

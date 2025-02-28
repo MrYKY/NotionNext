@@ -1,11 +1,11 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-// import { getGlobalData } from '@/lib/db/getSiteData'
-// import { generateRobotsTxt } from '@/lib/robots.txt'
-// import { generateRss } from '@/lib/rss'
-// import { generateSitemapXml } from '@/lib/sitemap.xml'
+import { getGlobalData } from '@/lib/db/getSiteData'
+import { generateRobotsTxt } from '@/lib/robots.txt'
+import { generateRss } from '@/lib/rss'
+import { generateSitemapXml } from '@/lib/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
-// import { generateRedirectJson } from '@/lib/redirect'
+import { generateRedirectJson } from '@/lib/redirect'
 
 /**
  * 首页布局
@@ -23,26 +23,24 @@ const Index = props => {
  * @returns
  */
 export async function getStaticProps(req) {
-  // const { locale } = req
-  // const from = 'index'
-  // const props = await getGlobalData({ from, locale })
+  const { locale } = req
+  const from = 'index'
+  const props = await getGlobalData({ from, locale })
 
-  // // 生成robotTxt
-  // generateRobotsTxt(props)
-  // // 生成Feed订阅
-  // generateRss(props)
-  // // 生成
-  // generateSitemapXml(props)
-  // if (siteConfig('UUID_REDIRECT', false, props?.NOTION_CONFIG)) {
-  //   // 生成重定向 JSON
-  //   generateRedirectJson(props)
-  // }
+  // 生成robotTxt
+  generateRobotsTxt(props)
+  // 生成Feed订阅
+  generateRss(props)
+  // 生成
+  generateSitemapXml(props)
+  if (siteConfig('UUID_REDIRECT', false, props?.NOTION_CONFIG)) {
+    // 生成重定向 JSON
+    generateRedirectJson(props)
+  }
 
-  // // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
+  // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
 
-  // delete props.allPages
-
-  const props = {}
+  delete props.allPages
 
   return {
     props,

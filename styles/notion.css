@@ -391,7 +391,7 @@
 }
 
 summary > .notion-h {
-  display: inline;
+  display: inline-block;
 }
 
 .notion-h {
@@ -743,10 +743,13 @@ svg.notion-page-icon {
   padding: 3px 2px;
 }
 
+
 .notion .notion-code {
   font-size: 85%;
   margin-top: 0;
   margin-bottom: 0.5em;
+  word-wrap: break-word !important;   /* 强制单词在行尾断开并换行 */
+  overflow-wrap: break-word !important; /* 兼容性更强的换行方案 */
 }
 
 pre[class*='language-'] {
@@ -755,6 +758,10 @@ pre[class*='language-'] {
 
 code[class*='language-'] {
   background: unset !important;
+  word-wrap: break-word !important;   /* 强制单词在行尾断开并换行 */
+  overflow-wrap: break-word !important; /* 兼容性更强的换行方案 */
+  display: inline-block;
+  @apply w-full;
 }
 
 .notion-code {
@@ -2033,7 +2040,7 @@ code.language-mermaid {
 }
 
 .code-toolbar {
-  @apply w-full pb-0 rounded-2xl ;
+  @apply w-full pb-0 rounded-3xl ;
 }
 
 .mermaid > svg {

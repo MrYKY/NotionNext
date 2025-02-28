@@ -207,7 +207,7 @@ function LightBoard({
     const dpr = window.devicePixelRatio || 1;
   
     // 提高缩放比例（例如 2 倍）
-    const scaleFactor = 1.2; // 可以调整这个值
+    const scaleFactor = 1; // 可以调整这个值
     const scaledDpr = dpr * scaleFactor;
   
     // 获取 Canvas 的显示尺寸
