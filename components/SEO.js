@@ -290,7 +290,7 @@ const getSEOMeta = (props, router, locale) => {
         slug: 'message',
         type: 'website'
       }
-    case '/cv':
+    case '/cv-2025':
       return {
         title: `${locale.COMMON.CV} | ${siteInfo?.title}`,
         description: `${siteInfo?.description}`,

@@ -65,7 +65,7 @@ const builtWith = [
     name: 'Cult UI',
     tag: 'Cult UI',
     logo: '/logos/cultui.svg',
-    url: 'https://www.reactbits.dev/'
+    url: 'https://www.cult-ui.com/'
   }
 ]
 
@@ -155,12 +155,11 @@ export default function Footer() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 1, y: '100vh' }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className='absolute inset-0 h-full w-full z-[60] bg-black/50 backdrop-blur-lg font-extralight'
-            onClick={() => setIsOpen(!isOpen)}>
+            className='absolute inset-0 h-full w-full z-[60] bg-black/50 backdrop-blur-lg font-extralight'>
             {/* 内容容器 */}
-            <div className='flex h-full flex-col items-center justify-center py-16 text-center text-white'>
+            <div className='flex h-full flex-col items-center justify-center py-16 text-center text-white font-serif'>
               <div>
-                <div className='text-2xl font-extralight text-black pt-10 py-5 opacity-80'>
+                <div className='text-xl font-extralight text-white pt-16 py-5 opacity-80 '>
                   Powered By
                 </div>
                 <div className='gap-10 flex '>
@@ -170,7 +169,7 @@ export default function Footer() {
                 </div>
               </div>
               <div>
-                <div className='text-2xl font-extralight text-black pt-10 py-5 opacity-80'>
+                <div className='text-xl font-extralight text-white pt-16 py-5 opacity-80'>
                   Built With
                 </div>
                 <div className='gap-10 flex flex-wrap items-center justify-center'>
@@ -180,7 +179,7 @@ export default function Footer() {
                 </div>
               </div>
               <div>
-                <div className='text-2xl font-extralight text-black pt-10 py-5 opacity-80'>
+                <div className='text-xl font-extralight text-white pt-16 py-5 opacity-80'>
                   Made With
                 </div>
                 <div className='gap-10 flex '>
@@ -190,7 +189,7 @@ export default function Footer() {
                 </div>
               </div>
               <div>
-                <div className='text-2xl font-extralight text-black pt-10 py-5 opacity-80'>
+                <div className='text-xl font-extralight text-white pt-16 py-5 opacity-80'>
                   Hosted On
                 </div>
                 <div className='gap-10 flex '>

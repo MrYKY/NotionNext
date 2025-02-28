@@ -45,6 +45,7 @@ import Noise from '@/components/animation/Noise'
 import GridDistortion from '@/components/animation/GridDistortion'
 import DesktopOnlyOverlay from '@/components/DesktopOnlyOverlay'
 import MainPagePanels from './mainpage_panels'
+import Resume from './cv2025'
 import Footer from '@/components/Footer'
 
 // 主题全局变量
@@ -302,6 +303,14 @@ const _LayoutBlogHome = () => {
         <p className='text-sm text-gray-600 text-right'>Kyan 2024年12月 北京</p>
       </div>
     </section>
+  )
+}
+
+const LayoutCV = props => {
+  return (
+    <LayoutIndex {...props}>
+      <Resume />
+    </LayoutIndex>
   )
 }
 
@@ -648,6 +657,7 @@ export {
   LayoutDashboard,
   LayoutIndex,
   LayoutMainPage,
+  LayoutCV,
   LayoutPostList,
   LayoutSearch,
   LayoutSignIn,
