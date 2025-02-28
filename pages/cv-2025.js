@@ -8,16 +8,16 @@ import { DynamicLayout } from '@/themes/theme'
  * @param {*} props
  * @returns
  */
-const NoFound = props => {
+const CV2025 = props => {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} layoutName='Layout404' {...props} />
+  return <DynamicLayout theme={theme} layoutName='LayoutCV' {...props} />
 }
 
 export async function getStaticProps(req) {
   const { locale } = req
 
-  const props = (await getGlobalData({ from: '404', locale })) || {}
+  const props = (await getGlobalData({ from: 'cv', locale })) || {}
   return { props }
 }
 
-export default NoFound
+export default CV2025

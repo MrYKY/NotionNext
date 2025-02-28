@@ -30,7 +30,6 @@ import BlogArchiveItem from './components/BlogArchiveItem'
 import BottomMenuBar from './components/BottomMenuBar'
 import Catalog from './components/Catalog'
 import CategoryItem from './components/CategoryItem'
-import Footer from './components/Footer'
 import Header from './components/Header'
 import JumpToTopButton from './components/JumpToTopButton'
 import NavPostList from './components/NavPostList'
@@ -41,8 +40,13 @@ import CONFIG from './config'
 import { Style } from './style'
 import LazyImage from '@/components/LazyImage'
 import AllPostList from './components/AllPostList'
-import { motion, AnimatePresence } from 'framer-motion'
-import panels from './mainpage_panels'
+import ASCIIText from '@/components/animation/ASCIIText'
+import Noise from '@/components/animation/Noise'
+import GridDistortion from '@/components/animation/GridDistortion'
+import DesktopOnlyOverlay from '@/components/DesktopOnlyOverlay'
+import MainPagePanels from './mainpage_panels'
+import Resume from './cv2025'
+import Footer from '@/components/Footer'
 
 // 主题全局变量
 const ThemeGlobalGitbook = createContext()
@@ -136,11 +140,12 @@ const LayoutBase = props => {
         changePageNavVisible
       }}>
       <Style />
-
       <OuterBorder>
+        <DesktopOnlyOverlay />
         {GITBOOK_LOADING_COVER && <LoadingCover />}
         {slotTop}
         {children}
+        <Footer />
       </OuterBorder>
     </ThemeGlobalGitbook.Provider>
   )
@@ -199,8 +204,6 @@ const LayoutIndex = props => {
                 {/* 所有文章列表 */}
                 <NavPostList filteredNavPages={allNavPages} {...props} />
               </div>
-              {/* 页脚 */}
-              {/* <Footer {...props} /> */}
             </div>
           </div>
         ) : null}
@@ -213,14 +216,9 @@ const LayoutIndex = props => {
             id='container-inner'
             className={` ${
               fullWidth ? 'px-5' : ''
-            } w-full mx-auto flex item-center justify-center`}>
+            } w-full h-full mx-auto flex item-center justify-center`}>
             {slotTop}
             {basePath?.indexOf('blog') > 0 ? <_LayoutBlogHome /> : children}
-          </div>
-
-          {/* 底部 */}
-          <div className='md:hidden'>
-            <Footer {...props} />
           </div>
         </div>
 
@@ -246,123 +244,73 @@ const LayoutIndex = props => {
       </main>
 
       {/* 回顶按钮 */}
-      <JumpToTopButton />
+      {/* <JumpToTopButton /> */}
 
       {/* 移动端导航抽屉 */}
-      <PageNavDrawer {...props} filteredNavPages={filteredNavPages} />
+      {/* <PageNavDrawer {...props} filteredNavPages={filteredNavPages} /> */}
 
       {/* 移动端底部导航栏 */}
-      <BottomMenuBar {...props} />
+      {/* <BottomMenuBar {...props} /> */}
     </div>
   )
 }
 
 const LayoutMainPage = props => {
-
-  const [current, setCurrent] = useState(0)
-  const [scrolling, setScrolling] = useState(false)
-
-  const handleScroll = useCallback(
-    e => {
-      if (scrolling) return
-
-      if (e.deltaY > 0 && current < panels.length - 1) {
-        setCurrent(prev => prev + 1)
-        setScrolling(true)
-      } else if (e.deltaY < 0 && current > 0) {
-        setCurrent(prev => prev - 1)
-        setScrolling(true)
-      }
-    },
-    [current, scrolling, panels.length]
-  )
-
-  useEffect(() => {
-    const onWheel = e => handleScroll(e)
-
-    window.addEventListener('wheel', onWheel)
-
-    return () => {
-      window.removeEventListener('wheel', onWheel)
-    }
-  }, [handleScroll])
-
-  // 允许滚动完成后再次响应滚动
-  useEffect(() => {
-    if (scrolling) {
-      const timer = setTimeout(() => {
-        setScrolling(false)
-      }, 700) // 动画持续时间（毫秒）稍大于动画时间
-      return () => clearTimeout(timer)
-    }
-  }, [scrolling])
-
   return (
     <div className='w-full h-full overflow-hidden'>
-      <AnimatePresence exitBeforeEnter>
-        <motion.div
-          key={current}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0 }}
-          className='w-full h-full'>
-          {panels[current].content}
-        </motion.div>
-      </AnimatePresence>
+      <MainPagePanels />
     </div>
   )
 }
 
 const _LayoutBlogHome = () => {
-  // 置顶文章列表
-  const topPosts = [
-    { title: '探索 React 18 的新特性', link: '/blog/react-18' },
-    { title: '如何设计一个高效的算法', link: '/blog/algorithm-design' },
-    { title: '我的前端开发工具箱', link: '/blog/frontend-tools' }
-  ]
-
   return (
-    <div className='w-full h-full flex flex-col justify-center items-center bg-white text-black px-4 pt-96'>
-      {/* 自我介绍 */}
-      <div className='text-center max-w-2xl'>
-        <h1 className='text-6xl font-bold mb-4'>
-          你好，我是{' '}
-          <span className='text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 animate-gradient'>
-            Kyan
-          </span>{' '}
-          🫡
-        </h1>
-        <p className='text-2xl text-gray-700 mb-8'>
-          欢迎来到我的互联网自留地
-          🌱，这里记录了我的技术探索、生活感悟和创作灵感。
+    <section className='flex flex-col w-full h-full justify-center items-center text-black/80 font-normal '>
+      <div className = 'absolute top-0 left-0 w-full h-full z-0 '>
+        <GridDistortion
+          imageSrc='https://pic1.zhimg.com/v2-7bacc3d54b12a9b1998baa0cde5b6280_r.jpg'
+          grid={10}
+          mouse={0.1}
+          strength={0.15}
+          relaxation={0.9}
+          className='custom-class'
+        />
+      </div>
+      <div className='max-w-3xl text-base leading-relaxed gap-y-4 flex flex-col pointer-events-none z-10 bg-white/20 backdrop-blur-md p-5 rounded-lg'>
+        <h1 className='leading-relaxed font-black text-lg'>你好，朋友。</h1>
+        <p className=''>
+          欢迎来到我的博客，也是我的“互联网自留地”，一片城市钢铁森林中的虚拟后花园。
         </p>
+        <p className=''>
+          这里没有固定的主题框架，只有真实的生活切片。我会记录不同阶段的思考：可能是某本书带来的启发，
+          某个技术问题的解决过程，或是对生活的阶段性梳理。这些文字不追求严密的逻辑，更像是与自己的对话实录，
+          偶尔带着些许不确定和模糊，却真实反映着我的内心世界。
+        </p>
+        <p className=''>
+          创建这个空间，源于对信息洪流的抵抗。在数字时代，社交媒体不断切割我们的注意力，刺激瞬时的反馈和碎片化的观点，
+          而我希望在这里找到一片相对宁静的土壤，保持一种缓慢而持续的记录状态。这里没有急功近利的追求，也不需要扮演某个领域的专家角色。
+          无需刻意展示“正确”的价值观或追求公众的认同，重要的是诚实面对自己的局限与成长，给自己留出足够的时间去思考和表达。
+        </p>
+        <p className=''>
+          留言区始终开放。如果你对某些内容产生共鸣或疑问，欢迎用简单的文字交流；
+          如果你只是安静地阅读，默默地从这些文字中汲取一丝思考的养分，同样是对这片自留地的滋养。这里的讨论不必走向结论，
+          重要的是保留思考的温度，让每个人在这里都有属于自己的空间和节奏。
+        </p>
+        <p className=''>
+          感谢你推开这扇门，来到这里。愿我们都能在数字时代里，开辟出属于普通人的精神角落——不必繁花似锦，
+          只需容得下真实的生长痕迹。希望无论是你一时的驻足，还是常来的访问，都能带走一些有意义的东西。
+        </p>
+        <p className='text-sm text-gray-600 text-right'>Kyan 2024年12月 北京</p>
       </div>
+    </section>
+  )
+}
 
-      {/* 置顶文章列表 */}
-      <div className='w-full max-w-2xl'>
-        <h2 className='text-4xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-green-500'>
-          置顶文章 📌
-        </h2>
-        <ul className='space-y-4'>
-          {topPosts.map((post, index) => (
-            <li
-              key={index}
-              className='text-2xl text-gray-700 hover:text-gray-900 transition-colors'>
-              <Link href={post.link} className='flex items-center'>
-                <span className='mr-2'>👉</span>
-                {post.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* 返回主页链接 */}
-      <div className='mt-12 text-xl text-blue-500 hover:text-blue-400 transition-colors'>
-        <Link href='/'>🏠 返回主页</Link>
-      </div>
-    </div>
+const LayoutCV = props => {
+  return (
+    <LayoutIndex {...props}>
+      <Resume />
+    </LayoutIndex>
   )
 }
 
@@ -460,7 +408,7 @@ const LayoutSlug = props => {
               </div>
 
               {/* 分享 */}
-              <ShareBar post={post} />
+              {/* <ShareBar post={post} /> */}
               {/* 文章分类和标签信息 */}
               <div className='flex justify-between'>
                 {siteConfig('POST_DETAIL_CATEGORY') && post?.category && (
@@ -474,9 +422,9 @@ const LayoutSlug = props => {
                 </div>
               </div>
 
-              {post?.type === 'Post' && (
+              {/* {post?.type === 'Post' && (
                 <ArticleAround prev={prev} next={next} />
-              )}
+              )} */}
 
               {/* <AdSlot />
               <WWAds className='w-full' orientation='horizontal' /> */}
@@ -533,8 +481,24 @@ const LayoutArchive = props => {
 const Layout404 = props => {
   return (
     <LayoutIndex {...props}>
-      <div className='w-full h-96 py-80 flex justify-center items-center'>
-        404 Not found.
+      <div className='w-full h-full flex flex-col'>
+        <div className='absolute h-full w-full z-50 pointer-events-none'>
+          <Noise
+            patternSize={500}
+            patternScaleX={1.5}
+            patternScaleY={1.5}
+            patternRefreshInterval={2}
+            patternAlpha={20}
+          />
+        </div>
+        <div className=''>
+          <ASCIIText
+            text='404'
+            enableWaves={false}
+            asciiFontSize={20}
+            planeBaseHeight={6}
+          />
+        </div>
       </div>
     </LayoutIndex>
   )
@@ -693,6 +657,7 @@ export {
   LayoutDashboard,
   LayoutIndex,
   LayoutMainPage,
+  LayoutCV,
   LayoutPostList,
   LayoutSearch,
   LayoutSignIn,
