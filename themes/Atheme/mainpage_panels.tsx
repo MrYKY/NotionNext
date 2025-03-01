@@ -55,11 +55,6 @@ const MainPagePanels = () => {
       onClick: () => router.push('/blog')
     },
     {
-      icon: '📄',
-      label: 'CV',
-      onClick: () => router.push('/cv')
-    },
-    {
       icon: 'ℹ️',
       label: 'About',
       onClick: () => router.push('/about')
