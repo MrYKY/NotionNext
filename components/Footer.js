@@ -128,7 +128,7 @@ export default function Footer() {
 
   return (
     <>
-      <div className='fixed bottom-0 z-[60] left-1/2 '>
+      <div className='fixed bottom-0 z-[60] left-1/2 hidden lg:block  '>
         {/* 独立控制的箭头按钮 */}
         <motion.div
           className='left-1/2 z-[60] cursor-pointer relative '
@@ -155,7 +155,7 @@ export default function Footer() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 1, y: '100vh' }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className='absolute inset-0 h-full w-full z-[60] bg-black/50 backdrop-blur-lg font-extralight'>
+            className='absolute inset-0 h-full w-full z-[60] bg-black/50 backdrop-blur-lg font-extralight hidden md:block '>
             {/* 内容容器 */}
             <div className='flex h-full flex-col items-center justify-center py-16 text-center text-white font-serif'>
               <div>
