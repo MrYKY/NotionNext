@@ -37,7 +37,7 @@ const Resume = () => {
           {/* 个人总结 */}
           <Section title='个人总结'>
             <p className='leading-relaxed text-gray-700'>
-              本人专业学习内容广泛且多样化，勇于探索新兴技术领域，具备快速学习与实践能力。在快手实习期间，成功实现从游戏开发领域向大模型领域的转型。拥抱AI时代，相信技术工作者应在AI的辅助下，专注于发展更高层次的体系化思维和工程思维，而不应过于纠结技术细节。
+              本人专业学习内容广泛且多样化，勇于探索新兴技术领域，具备快速学习与实践能力。热爱游戏，有较高的游戏审美，爱好绘画，有一定的艺术审美。在快手实习期间，成功实现从游戏开发领域向大模型领域的转型。拥抱AI时代，相信技术工作者应在AI的辅助下，专注于发展更高层次的体系化思维和工程思维，而不应过于纠结技术细节。
             </p>
           </Section>
 
@@ -175,9 +175,20 @@ const Resume = () => {
               ]}
               points={[
                 '2D双人本地回合制策略游戏，独立完成从游戏设计、系统架构到程序编写的全过程',
-                '最终形成可正常游玩的完整原型'
+                '最终形成可正常游玩的完整原型',
+                '代码量1000+行|UE反射机制|Delegate通信机制',
+                '通过该项目熟悉了UE5 C++的基本特征，对一个完整项目所需要的工程意识有了更深刻的体会'
               ]}
             />
+
+            <ProjectItem
+              name='What The Football?'
+              period='2023年10月'
+              techStack={['UE5 Blueprint', '游戏Demo','课程项目']}
+              points={['一个多关卡3D解谜游戏，完全使用蓝图进行开发',
+                'UE5 Chaos破坏系统|AI行为树|动画重定向|UMG Widget'
+              ]}
+              />
           </Section>
 
           {/* 其他信息 */}
@@ -190,6 +201,10 @@ const Resume = () => {
               <InfoItem
                 title='沟通合作能力'
                 content='本科阶段担任班长｜研究生阶段担任班长兼团支书'
+              />
+              <InfoItem
+                title='热爱游戏'
+                content='PC、PS5玩家，Steam库存200+，单机游戏时长1800h+'
               />
             </div>
           </Section>
@@ -294,13 +309,13 @@ const ProjectItem = ({
   name,
   period,
   techStack,
-  links,
+  links = [], // 添加默认值
   points
 }: {
   name: string
   period: string
   techStack: string[]
-  links: Array<{ label: string; url: string }>
+  links?: Array<{ label: string; url: string }> // 设为可选参数
   points: string[]
 }) => (
   <div className='space-y-4 pb-6 mb-6 border-b last:border-b-0 border-gray-100 last:pb-0'>
@@ -319,19 +334,22 @@ const ProjectItem = ({
       ))}
     </div>
 
-    <div className='flex flex-wrap gap-4'>
-      {links.map((link, i) => (
-        <a
-          key={i}
-          href={link.url}
-          target='_blank'
-          rel='noopener noreferrer'
-          className='text-blue-500 hover:text-blue-600 flex items-center gap-1'>
-          <span>{link.label}</span>
-          <ExternalLinkIcon className='w-4 h-4' />
-        </a>
-      ))}
-    </div>
+    {/* 只在有链接时显示 */}
+    {links.length > 0 && (
+      <div className='flex flex-wrap gap-4'>
+        {links.map((link, i) => (
+          <a
+            key={i}
+            href={link.url}
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-blue-500 hover:text-blue-600 flex items-center gap-1'>
+            <span>{link.label}</span>
+            <ExternalLinkIcon className='w-4 h-4' />
+          </a>
+        ))}
+      </div>
+    )}
 
     <ul className='space-y-2 list-disc pl-6 text-gray-700'>
       {points.map((point, i) => (
@@ -340,7 +358,6 @@ const ProjectItem = ({
     </ul>
   </div>
 )
-
 const InfoItem = ({ title, content }: { title: string; content: string }) => (
   <div className='flex gap-4'>
     <div className='w-24 shrink-0 font-medium text-blue-600'>{title}</div>

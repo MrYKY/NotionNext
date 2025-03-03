@@ -7,7 +7,7 @@ import LazyImage from '@/components/LazyImage'
 
 const BlogPostCardFull = ({ post, className, showmethod }) => {
   const router = useRouter()
-  console.log('post: ', post)
+  // console.log('post: ', post)
   const currentSelected =
     decodeURIComponent(router.asPath.split('?')[0]) === post?.href
 
